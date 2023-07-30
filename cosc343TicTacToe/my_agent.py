@@ -4,6 +4,7 @@ __email__ = "lech.szymanski@otago.ac.nz"
 
 # Import the random number generation library
 import random
+import numpy as np
 from cosc343TicTacToe import maxs_possible_moves, mins_possible_moves, terminal, evaluate, state_change_to_action, remove_symmetries
 class TicTacToeAgent():
     """
@@ -39,6 +40,7 @@ class TicTacToeAgent():
                  where this agent wants to place its mark
         """
         min_moves = remove_symmetries(mins_possible_moves(percepts))
+        
         max_moves = remove_symmetries(maxs_possible_moves(percepts))
         for row in percepts:
             print(row)
@@ -47,12 +49,12 @@ class TicTacToeAgent():
         for state in min_moves:
             for row in state:
                 print(row)
-            print()
+            print('evalmin: ',evaluate(state))
         
         for state in max_moves:
             for row in state:
                 print(row)
-            print()
+            print('evalmax: ',evaluate(state))
         # This agent makes a random move.
         while True:
             # Select the location of the new mark at random
@@ -66,5 +68,8 @@ class TicTacToeAgent():
             # - otherwise try a different random location
             if percepts[r][c] == 0:
                 return (r,c)
+            
+    def solve():
+        pass
 
 
