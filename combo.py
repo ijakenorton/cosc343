@@ -11,7 +11,7 @@ def all_combinations(my_list):
     return all_combinations
 
 # Your list
-my_list = [1, 5, 4, 7, 0, 2, 3, 6, 8]
+my_list = [1, 5, 4, 7, 0, 2, 3, 6, 8, ]
 
 result = all_combinations(my_list)
 

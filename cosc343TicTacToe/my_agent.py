@@ -39,37 +39,36 @@ class TicTacToeAgent():
         :return: tuple (r,c) where r is the row and c is the column index
                  where this agent wants to place its mark
         """
-        min_moves = remove_symmetries(mins_possible_moves(percepts))
+        best_move = None
+        best_evaluation = float('-inf')
+        for move in remove_symmetries(maxs_possible_moves(percepts)):
+            evaluation = self.solve(move, 3, False)
+            if evaluation > best_evaluation:
+                best_evaluation = evaluation
+                best_move = move
         
-        max_moves = remove_symmetries(maxs_possible_moves(percepts))
-        for row in percepts:
-            print(row)
-        
-        print('*********************')
-        for state in min_moves:
-            for row in state:
-                print(row)
-            print('evalmin: ',evaluate(state))
-        
-        for state in max_moves:
-            for row in state:
-                print(row)
-            print('evalmax: ',evaluate(state))
-        # This agent makes a random move.
-        while True:
-            # Select the location of the new mark at random
-            # by generating 2 random numbers between 0 and 2
-            # (but including 2)
-            r = random.randint(0,2)
-            c = random.randint(0,2)
-
-            # Check if the new location on the board is unmarked
-            # - if so, make a mark and return the new state...
-            # - otherwise try a different random location
-            if percepts[r][c] == 0:
-                return (r,c)
+        r,c = state_change_to_action(percepts,best_move)
+        return (r,c)
             
-    def solve():
-        pass
+    def solve(self , state, depth, max_player):
+        
+        if depth == 0 or terminal(state) == True:
+            return evaluate(state)
+        
+        if max_player:
+            max_evaluation = float('-inf')
+            for move in remove_symmetries(maxs_possible_moves(state)) :
+                evaluation = self.solve(move, depth-1, False) 
+                max_evaluation = max(max_evaluation, evaluation) 
+            return max_evaluation
+        if not max_player:
+            mins_evaluation = float('inf')
+            for move in remove_symmetries(mins_possible_moves(state)) :
+                evaluation = self.solve(move, depth-1, True) 
+                mins_evaluation = min(mins_evaluation, evaluation)         
+            
+            return mins_evaluation
+        
+        
 
 
