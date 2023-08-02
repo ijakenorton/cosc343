@@ -6,6 +6,7 @@ __email__ = "lech.szymanski@otago.ac.nz"
 import random
 import numpy as np
 from cosc343TicTacToe import maxs_possible_moves, mins_possible_moves, terminal, evaluate, state_change_to_action, remove_symmetries
+
 class TicTacToeAgent():
     """
            A class that encapsulates the code dictating the
@@ -51,23 +52,37 @@ class TicTacToeAgent():
         return (r,c)
             
     def solve(self , state, depth, max_player):
-        
+        global saved_moves
         if depth == 0 or terminal(state) == True:
             return evaluate(state)
         
         if max_player:
             max_evaluation = float('-inf')
-            for move in remove_symmetries(maxs_possible_moves(state)) :
+            beta = float('-inf')
+            count = 0
+            moves = remove_symmetries(maxs_possible_moves(state))
+            for move in moves :
+                count += 1
                 evaluation = self.solve(move, depth-1, False) 
+                if evaluation < beta:
+                    break
                 max_evaluation = max(max_evaluation, evaluation) 
+                beta = max_evaluation
             return max_evaluation
         if not max_player:
-            mins_evaluation = float('inf')
-            for move in remove_symmetries(mins_possible_moves(state)) :
-                evaluation = self.solve(move, depth-1, True) 
-                mins_evaluation = min(mins_evaluation, evaluation)         
+            min_evaluation = float('inf')
+            alpha = float('inf')
+            count = 0
+            moves = remove_symmetries(mins_possible_moves(state))
+            for move in moves :
+                count += 1
+                evaluation = self.solve(move, depth-1, True)
+                if evaluation > alpha:
+                    break 
+                min_evaluation = min(min_evaluation, evaluation)    
+                alpha = min_evaluation     
             
-            return mins_evaluation
+            return min_evaluation
         
         
 

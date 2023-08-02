@@ -6,7 +6,7 @@ __email__ = "lech.szymanski@otago.ac.nz"
 
 game_settings = {
 
-   "agentFile": "random_agent.py", # name of the agent file (replace with my_agent.py when your agent is ready)
+   "agentFile": "my_agent.py", # name of the agent file (replace with my_agent.py when your agent is ready)
 
    "codeLength": 5,              # length of the code to guess
 
