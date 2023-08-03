@@ -79,13 +79,14 @@ class MastermindAgent():
         if self.guess_counter == 1:
             self.print_state(percepts)
             self.generate_possible_codes()
+            print(len(self.possible_codes))
             exit(0)
         return self.first_guess
 
     def generate_first_guess(self):
         guess = []
         for i in range(0, self.code_length):
-            if i < self.code_length//3:
+            if i < self.code_length//2:
                 guess.append(self.colours[0])
             else:
                 guess.append(self.colours[1])
@@ -107,7 +108,9 @@ class MastermindAgent():
                  possible_codes.append(code)
         self.possible_codes = possible_codes
         
-        
+    def generate_non_symmetrical_first_guess(self):
+        pass
+    
     def get_unique_colours(self):
         unique_colours = set(self.last_guess)
         return len(unique_colours)
