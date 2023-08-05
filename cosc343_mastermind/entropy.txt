@@ -1,0 +1,23 @@
+Mastermind
+  Code length: 5
+      Colours: ['B', 'R', 'G', 'Y', 'P', 'C']
+Game play:
+  Num guesses:      10
+  Num rounds:       100
+Round 1/100
+21156876
+9410300
+7623222
+6659862
+7304696
+6659862
+6910906
+7566038
+Key: ('B', 'B', 'B', 'B', 'B'), Entropy: 0.5174417437754044
+Key: ('B', 'B', 'B', 'B', 'R'), Entropy: 0.380221217707314
+Key: ('B', 'B', 'B', 'R', 'R'), Entropy: 0.3396176870854218
+Key: ('B', 'B', 'R', 'R', 'G'), Entropy: 0.31441051991223407
+Key: ('B', 'R', 'R', 'R', 'G'), Entropy: 0.3315643207267787
+Key: ('B', 'R', 'R', 'G', 'G'), Entropy: 0.31441051991223407
+Key: ('B', 'R', 'R', 'G', 'Y'), Entropy: 0.3212286409222293
+Key: ('B', 'R', 'G', 'Y', 'P'), Entropy: 0.33819150931992664
