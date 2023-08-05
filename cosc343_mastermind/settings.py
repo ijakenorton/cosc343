@@ -16,7 +16,7 @@ game_settings = {
 
    "totalNumberOfGames": 100,    # total number of games played
 
-   "verbose": True,
+   "verbose": False,
 
    "seed": 0                     # seed for random choices of words in the game, None for random seed
 

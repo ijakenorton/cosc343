@@ -58,6 +58,8 @@ class MastermindAgent():
         self.num_guesses = num_guesses
         self.all_codes = np.array(list(
             itertools.product(colours, repeat=code_length)))
+        self.possible_outputs = np.array(list(filter(lambda x: sum(x) <= code_length-1, itertools.product(range(code_length+1), repeat=2))))
+        
         self.possible_codes = self.all_codes
         self.first_guess = np.array(self.generate_first_guess())
         self.last_guess = self.first_guess
@@ -174,53 +176,8 @@ def evaluate_key(args):
     return groups
 
 
-# def evaluate_guess(guess, target):
-#     guess = np.reshape(guess, (-1))
-#     target = np.reshape(target, (-1))
-
-#     mismatch_indices = np.where(guess != target)[0]
-#     in_place = len(guess) - len(mismatch_indices)
-#     state = np.zeros_like(target, dtype=bool)
-
-#     in_colour = 0
-#     for i in mismatch_indices:
-#         a = target[i]
-#         for j in mismatch_indices:
-#             if state[j]:
-#                 continue
-#             b = guess[j]
-#             if a == b:
-#                 in_colour += 1
-#                 state[j] = True
-#                 break
-
-#     return in_place, in_colour
 
 
-
-# def evaluate_guess(guess, target):
-
-#     guess = np.reshape(guess, (-1))
-#     target = np.reshape(target, (-1))
-
-#     I = np.where(guess == target)[0]
-#     in_place = len(I)
-#     I = np.where(guess != target)[0]
-#     state = np.zeros(np.shape(target))
-
-#     in_colour = 0
-#     for i in I:
-#         a = target[i]
-#         for j in I:
-#             if state[j] != 0:
-#                 continue
-
-#             b = guess[j]
-
-#             if a == b:
-#                 in_colour += 1
-#                 state[j] = -1
-#                 break
 
 #     return in_place, in_colour
     # def calc_first_guess_entropy(self):
