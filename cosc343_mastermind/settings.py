@@ -18,7 +18,7 @@ game_settings = {
 
    "verbose": False,
 
-   "seed": 0                     # seed for random choices of words in the game, None for random seed
+   "seed": None                     # seed for random choices of words in the game, None for random seed
 
 }
 

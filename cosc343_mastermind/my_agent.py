@@ -104,13 +104,14 @@ class MastermindAgent():
             return self.first_guess
         
         self.generate_possible_codes()
-        print(self.first_guess)
-        print(len(self.possible_codes))
-        exit(0)
-        for code in tqdm(self.possible_codes):
-            self.partition(code)
-        choice = list(random.choice(self.possible_codes))
-        return np.array(choice)
+        entropies = []
+        with Pool(mp.cpu_count()) as p:    
+            entropies = list(p.map(self.partition, self.possible_codes))
+        
+        # max_entropy = entropies.index(max(entropies))
+        max_entropy = entropies.index(max(entropies))
+        choice = self.possible_codes[max_entropy]
+        return choice
 
     def generate_possible_codes(self):
         possible_codes = []
@@ -169,19 +170,9 @@ class MastermindAgent():
         counts = self.create_buckets()
         for code in self.possible_codes:
             output = evaluate_guess(code, trial)
-            counts[output] += 1       
-        # for key in counts:
-        #     print("key: ",key,' length: ',counts[key])
-        print(self.entropy(counts.values()))
-# Start by picking a possible guess.
+            counts[output] += 1     
+        return self.entropy(counts.values())  
 
-# Partition the set of all remaining possible true codes based on the feedback that would be received if the current guess were true. In other words, group together all codes that would give the same feedback. For example, you might have a group of codes that would all give feedback of "2 black pegs, 1 white peg", another group that would all give "1 black peg, 2 white pegs", etc.
-
-# For each partition, calculate the probability of ending up in that partition if the current guess were made. This would just be the size of the partition (the number of codes in it) divided by the total number of remaining possible codes.
-
-# Calculate the entropy of the resulting distribution over partitions. This is done in the same way as before: sum over all partitions (-P(partition) * log2(P(partition))).
-
-# Repeat this process for each possible guess, and choose the guess that results in the highest entropy.
 
     def entropy(self, counts):
         
@@ -189,7 +180,6 @@ class MastermindAgent():
 
         entropy = -sum(p * log2(p) for p in probabilities if p > 0)
         return entropy
-  # 'lengths' should be replaced with the list of all lengths.
 
 def calc_entropy(groups):
     total_count = sum(groups.values())
@@ -215,28 +205,7 @@ def evaluate_key(args):
     return groups
 
 
-#     return in_place, in_colour
-    # def calc_first_guess_entropy(self):
-    #     default_value = 0
-    #     groups = {tuple(sublist): default_value for sublist in self.first_codes}
-    #     for key in tqdm(groups):
-    #         code = list(key)
-    #         for target in tqdm(self.all_codes):
-    #             last_score = evaluate_guess(code, target)
-    #             for c in self.all_codes:
-    #                 guess = evaluate_guess(code, c)
-    #                 if guess == last_score:
-    #                     groups[key] += 1
-    #     for key in groups.keys():
-    #         print(groups[key])
 
 
-    def generate_non_symmetrical_first_guess(self):
-        pass
 
-    def print_state(self, percepts):
-        guess_counter, last_guess, in_place, in_colour = percepts
-        print('count: ', guess_counter)
-        print('in_place: ', in_place)
-        print('in_colour: ', in_colour)
-        print('last_guess: ', last_guess)
+
