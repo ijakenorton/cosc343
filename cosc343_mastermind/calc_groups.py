@@ -10,7 +10,7 @@ def unique_partitions(n):
         if p and (len(p) < 2 or p[1] > p[0]):
             yield [p[0] + 1] + p[1:]
 
-for partition in unique_partitions(6):
+for partition in unique_partitions(5):
     print(sorted(partition, reverse=False))
 
 

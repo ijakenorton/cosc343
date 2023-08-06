@@ -7,7 +7,10 @@ import numpy as np
 import importlib
 import time
 from settings import game_settings
+import logging
 
+logging.basicConfig(level=logging.DEBUG, format='%(message)s')
+logger = logging.getLogger(__name__)
 class bcolors:
    RED = '\033[1;30;41m'
    GREEN = '\033[1;30;42m'
@@ -257,23 +260,29 @@ class MastermindGame:
       game_count = 0
       tot_time = 0
       for i in I:
-         if self.verbose:
-            print("Round %d/%d" % (game_count+1,len(I)))
-
          start = time.time()
-         score += self.play(player,target=self.colours[i],num_guesses=num_guesses)
+         score += self.play(player, target=self.colours[i], num_guesses=num_guesses)
          end = time.time()
          game_count += 1
-         print("Average score after game %d: %.2f" % (game_count,score/(game_count)))
          tot_time += end - start
 
          if game_count < num_games:
             avg_time = tot_time / game_count
-            print("Average running time per game %s." % (time_to_str(avg_time)))
-            print("Time remaining %s." % (time_to_str(avg_time * (num_games-game_count))))
-            print("Expected total running time %s." % (time_to_str(avg_time * num_games)))
+            remaining_time = time_to_str(avg_time * (num_games-game_count))
+            expected_total_time = time_to_str(avg_time * num_games)
          else:
-            print("Total running time %s." % (time_to_str(tot_time)))
+            remaining_time = "N/A"
+            expected_total_time = time_to_str(tot_time)
+
+         logger.debug("Round {}/{} | Avg score: {:.2f} | Avg time/game: {} | Time remaining: {} | Total expected time: {}"
+               .format(game_count, len(I), score/game_count, time_to_str(avg_time), remaining_time, expected_total_time))
+      print(("Round {}/{} | Avg score: {:.2f} | Avg time/game: {} Total expected time: {}"
+               .format(game_count, len(I), score/game_count, time_to_str(avg_time), remaining_time, expected_total_time)))
+
+
+
+
+
 
 
 
