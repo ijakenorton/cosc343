@@ -1,3 +1,5 @@
+
+
 __author__ = "Jake Norton"
 __organization__ = "COSC343/AIML402, University of Otago"
 __email__ = "norja159@student.otago.ac.nz"
@@ -11,7 +13,7 @@ from tqdm import tqdm
 import multiprocessing as mp
 from multiprocessing import Pool
 from math import log2
-
+from settings import game_settings
 
 class MastermindAgent():
     """
@@ -44,6 +46,8 @@ class MastermindAgent():
         :param num_guesses: the max. number of guesses per game
         """
         self.colours = colours
+        self.sample = game_settings['sample']
+        self.lower_bound = game_settings['lower_bound']
         self.code_length = code_length
         self.first_codes = (self.get_first_codes())
         self.num_guesses = num_guesses
@@ -57,7 +61,7 @@ class MastermindAgent():
             self.possible_outputs.append(tuple(output))
             
         self.possible_codes = self.all_codes
-        self.first_guess = self.first_codes[3]
+        self.first_guess = self.first_codes[2]
         self.last_guess = self.first_guess
         self.guess_count = 0
         self.in_colour = 0
@@ -92,23 +96,25 @@ class MastermindAgent():
             return self.first_guess
 
         self.generate_possible_codes()
-        entropies = self.calculate_entropies()
+        choice = self.calculate_entropies()
 
-        # max_entropy = entropies.index(max(entropies))
-        max_entropy = entropies.index(max(entropies))
-        # max_entropy = np.argmax(entropies)
-        choice = self.possible_codes[max_entropy]
         return choice
 
     def calculate_entropies(self):
-        # if len(self.possible_codes) > 500:
-        #     sample_size = int(0.20 * len(self.possible_codes))
-        #     indices = np.random.choice(self.possible_codes.shape[0], sample_size, replace=False)
-        #     entropies = self.get_entropies(self.possible_codes[indices])
-        # else:
-        #     entropies = self.get_entropies(self.possible_codes)
-        entropies = self.get_entropies(self.possible_codes)
-        return entropies
+        if len(self.possible_codes) > self.lower_bound:
+            sample_size = int(self.sample * len(self.possible_codes))
+            
+            indices = np.random.choice(self.possible_codes.shape[0], sample_size, replace=False)
+            sampled = self.possible_codes[indices]
+            entropies = self.get_entropies(sampled)
+            max_entropy = np.argmax(entropies)
+            return sampled[max_entropy]
+        else:
+            entropies = self.get_entropies(self.possible_codes)
+            max_entropy = np.argmax(entropies)
+            return self.possible_codes[max_entropy]
+        
+        
     
     def reset_game(self):
         self.last_guess = self.first_guess

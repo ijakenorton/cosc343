@@ -277,7 +277,7 @@ class MastermindGame:
          logger.debug("Round {}/{} | Avg score: {:.2f} | Avg time/game: {} | Time remaining: {} | Total expected time: {}"
                .format(game_count, len(I), score/game_count, time_to_str(avg_time), remaining_time, expected_total_time))
       print(("Round {}/{} | Avg score: {:.2f} | Avg time/game: {} Total expected time: {}"
-               .format(game_count, len(I), score/game_count, time_to_str(avg_time), remaining_time, expected_total_time)))
+               .format(game_count, len(I), score/game_count, time_to_str(avg_time), tot_time)))
 
 
 
