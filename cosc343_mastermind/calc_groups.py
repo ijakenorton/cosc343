@@ -1,30 +1,16 @@
-colours = ['B','R','G','Y','P','C']
-pegs = 5
-codes = []
-code = []
-for i in range(0,pegs):
-    code.append(0)
+def unique_partitions(n):
+    # Base case of recursion: zero is the sum of the empty list
+    if n == 0:
+        yield []
+        return
+        
+    # Modify partitions of n-1 to form partitions of n
+    for p in unique_partitions(n-1):
+        yield [1] + p
+        if p and (len(p) < 2 or p[1] > p[0]):
+            yield [p[0] + 1] + p[1:]
 
+for partition in unique_partitions(6):
+    print(sorted(partition, reverse=False))
 
-def find_groups(colours):
-    code = colours.copy()
-    code.sort()
-    groupings = []
-    temp = code[0]
-    groupings.append(0)
-    index = 0
-    for num in code:
-        if num != temp:
-            index  += 1
-            groupings.append(1)
-            temp = num
-        else:
-            groupings[index] += 1
-    groupings.sort()
-    return groupings
-
-for i in range(0, len(code)):
-    code[0] += 1
-    print(code)
-    print(find_groups(code))    
 

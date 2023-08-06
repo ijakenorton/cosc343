@@ -5,8 +5,8 @@ __email__ = "norja159@student.otago.ac.nz"
 import numpy as np
 import itertools
 import random
-# from evaluate import evaluate_guess
-from mastermind import evaluate_guess
+from evaluate import evaluate_guess
+# from mastermind import evaluate_guess
 from tqdm import tqdm
 import multiprocessing as mp
 from multiprocessing import Pool
@@ -54,16 +54,18 @@ class MastermindAgent():
             [0, 1, 1, 2, 3],
             [0, 1, 2, 3, 4]
         ]
-        self.first_codes = np.array(self.get_first_codes())
         self.code_length = code_length
+        self.first_codes = np.array(self.get_first_codes())
         self.num_guesses = num_guesses
         self.all_codes = np.array(list(
             itertools.product(colours, repeat=code_length)))
         possible_outputs = (list(filter(lambda x: sum(
             x) <= code_length, itertools.product(range(code_length+1), repeat=2))))
+        
         self.possible_outputs = []
         for output in possible_outputs:
             self.possible_outputs.append(tuple(output))
+            
         self.possible_codes = self.all_codes
         self.first_guess = self.first_codes[3]
         self.last_guess = self.first_guess
@@ -93,7 +95,7 @@ class MastermindAgent():
 
         # Extract different parts of percepts.
         self.guess_counter, self.last_guess, self.in_place, self.in_colour = percepts
-        
+
         if self.guess_counter == 0:
             self.last_guess = self.first_guess
             self.guess_count = 0
@@ -102,36 +104,49 @@ class MastermindAgent():
             self.possible_codes = self.all_codes
 
             return self.first_guess
-        
+
         self.generate_possible_codes()
-        entropies = []
-        with Pool(mp.cpu_count()) as p:    
-            entropies = list(p.map(self.partition, self.possible_codes))
-        
+        if len(self.possible_codes) > 500:
+            sample_size = int(0.20 * len(self.possible_codes))
+            entropies = []
+            indices = np.random.choice(self.possible_codes.shape[0], sample_size, replace=False)
+            with Pool(mp.cpu_count()) as p:
+                entropies = list(p.map(self.partition, self.possible_codes[indices]))
+        else:
+            entropies = []
+            with Pool(mp.cpu_count()) as p:
+                entropies = list(p.map(self.partition, self.possible_codes))
+
         # max_entropy = entropies.index(max(entropies))
         max_entropy = entropies.index(max(entropies))
         choice = self.possible_codes[max_entropy]
         return choice
 
     def generate_possible_codes(self):
-        possible_codes = []
+        # Initialize an array of maximum size (equal to the number of possible codes).
+        # We will truncate this array at the end.
+        possible_codes = np.empty((len(self.possible_codes), len(self.last_guess)), dtype='<U1')
         last_score = (self.in_place, self.in_colour)
         last_guess = np.array(self.last_guess)
+
+        i = 0
         for code in self.possible_codes:
             guess = evaluate_guess(last_guess, code)
             if guess == last_score:
-                possible_codes.append(code)
-        self.possible_codes = possible_codes
+                possible_codes[i] = code
+                i += 1
+
+        # Truncate the array to the number of codes that matched the score.
+        self.possible_codes = possible_codes[:i]
+
 
     def get_first_codes(self):
-        codes = []
-        for i in range(0, len(self.non_symmetrical_first_guesses)):
-            codes.append([])
-            for j in range(0, len(self.non_symmetrical_first_guesses[i])):
-                codes[i].append(
-                    self.colours[self.non_symmetrical_first_guesses[i][j]])
+        groupings = []
+        for partition in unique_partitions(self.code_length):
+            groupings.append(partition)
+        print(groupings)
+        return groupings
 
-        return codes
 
     def calc_first_guess_entropy(self):
         # create a list of tuples containing the key and other necessary parameters
@@ -151,35 +166,34 @@ class MastermindAgent():
             print(groups[key])
         calc_entropy(groups)
 
-    def generate_first_guess(self):
-        guess = []
-        for i in range(0, self.code_length):
-            if i < self.code_length//2:
-                guess.append(self.colours[0])
-            else:
-                guess.append(self.colours[1])
-        return guess
 
     def create_buckets(self):
-        counts = {}
-        for output in self.possible_outputs:
-            counts[output] = 0
-        return counts
-    
+        return {output: 0 for output in self.possible_outputs}
+
     def partition(self, trial):
         counts = self.create_buckets()
         for code in self.possible_codes:
             output = evaluate_guess(code, trial)
-            counts[output] += 1     
-        return self.entropy(counts.values())  
-
+            counts[output] += 1
+        return self.entropy(counts.values())
 
     def entropy(self, counts):
-        
         probabilities = [count / len(self.possible_codes) for count in counts]
-
         entropy = -sum(p * log2(p) for p in probabilities if p > 0)
         return entropy
+
+def unique_partitions(n):
+# Base case of recursion: zero is the sum of the empty list
+    if n == 0:
+        yield []
+        return
+        
+    # Modify partitions of n-1 to form partitions of n
+    for p in unique_partitions(n-1):
+        yield [1] + p
+        if p and (len(p) < 2 or p[1] > p[0]):
+            yield [p[0] + 1] + p[1:]
+
 
 def calc_entropy(groups):
     total_count = sum(groups.values())
@@ -203,9 +217,3 @@ def evaluate_key(args):
             if guess == last_score:
                 groups[key] += 1
     return groups
-
-
-
-
-
-
