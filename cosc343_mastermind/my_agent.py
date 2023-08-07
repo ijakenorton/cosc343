@@ -14,6 +14,7 @@ import multiprocessing as mp
 from multiprocessing import Pool
 from math import log2
 from settings import game_settings
+from concurrent.futures import ProcessPoolExecutor
 
 class MastermindAgent():
     """
@@ -49,7 +50,7 @@ class MastermindAgent():
         self.sample = game_settings['sample']
         self.lower_bound = game_settings['lower_bound']
         self.code_length = code_length
-        self.first_codes = (self.get_first_codes())
+        self.first_codes = (self.get_first_codes(self.code_length))
         self.num_guesses = num_guesses
         self.all_codes = np.array(list(
             itertools.product(colours, repeat=code_length)))
@@ -89,7 +90,11 @@ class MastermindAgent():
 
         # Extract different parts of percepts.
         self.guess_counter, self.last_guess, self.in_place, self.in_colour = percepts
-
+        for code_length in self.calc_first_guess_entropy():
+            for key in code_length:
+                print(key, code_length[key])
+            print('***********************************************')
+        exit(0)
         if self.guess_counter == 0:
             self.reset_game()
 
@@ -113,7 +118,6 @@ class MastermindAgent():
             entropies = self.get_entropies(self.possible_codes)
             max_entropy = np.argmax(entropies)
             return self.possible_codes[max_entropy]
-        
         
     
     def reset_game(self):
@@ -141,10 +145,12 @@ class MastermindAgent():
         self.possible_codes = possible_codes[:i]
         
     def get_entropies(self, codes):
-        with Pool(mp.cpu_count()) as p:
-            entropies = list(p.map(self.partition, codes))
-        return entropies
 
+        with ProcessPoolExecutor(max_workers=mp.cpu_count()) as executor:
+            entropies = list(executor.map(self.partition, codes))
+
+        return entropies
+    
     def partition(self, trial):
         counts = {output: 0 for output in self.possible_outputs}
         for code in self.possible_codes:
@@ -158,9 +164,9 @@ class MastermindAgent():
         entropy = -sum(p * log2(p) for p in probabilities if p > 0)
         return entropy
 
-    def get_first_codes(self):
+    def get_first_codes(self, code_length):
         groupings = []
-        for partition in unique_partitions(self.code_length):
+        for partition in unique_partitions(code_length):
             groupings.append(partition)
         return self.groupings_to_codes(groupings)
 
@@ -176,22 +182,30 @@ class MastermindAgent():
         return codes
 
     def calc_first_guess_entropy(self):
-        # create a list of tuples containing the key and other necessary parameters
-        keys_with_params = [(tuple(sublist), self.all_codes)
-                            for sublist in self.first_codes]
+        all_entropies = []
+        for i in range(3, 6):
+            first_codes = self.get_first_codes(i)
+            all_codes = np.array(list(
+            itertools.product(self.colours, repeat=i)))
+        #    create a list of tuples containing the key and other necessary parameters
+            keys_with_params = [(tuple(sublist), all_codes)
+                                for sublist in first_codes]
 
-        # Start multiprocessing pool and map function
-        with Pool(mp.cpu_count()) as p:
-            result = list(
-                tqdm(p.imap(evaluate_key, keys_with_params), total=len(keys_with_params)))
+            # Start multiprocessing pool and map function
+            with Pool(mp.cpu_count()) as p:
+                result = list(
+                    tqdm(p.imap(evaluate_key, keys_with_params), total=len(keys_with_params)))
 
-        # Combine the results
-        groups = {k: v for res in result for k, v in res.items()}
+            # Combine the results
+            groups = {k: v for res in result for k, v in res.items()}
 
-        # Print the results
-        # for key in groups.keys():
-        #     print(groups[key])
-        calc_entropy(groups)
+            entropy = calc_entropy(groups)
+            for key in entropy:
+                print(key, entropy[key])
+            print('***********************************************')
+            all_entropies.append(entropy)
+        return all_entropies
+            
 
 
 
@@ -215,8 +229,8 @@ def calc_entropy(groups):
     entropies = {key: -p * np.log2(p) if p >
                  0 else 0 for key, p in probabilities.items()}
     # Print the entropies
-    for key, entropy in entropies.items():
-        print(f"Key: {key}, Entropy: {entropy}")
+    
+    return entropies
 
 
 def evaluate_key(args):
@@ -230,3 +244,5 @@ def evaluate_key(args):
             if guess == last_score:
                 groups[key] += 1
     return groups
+
+
