@@ -47,6 +47,7 @@ class MastermindAgent():
         :param num_guesses: the max. number of guesses per game
         """
         self.colours = colours
+        
         self.sample = game_settings['sample']
         self.lower_bound = game_settings['lower_bound']
         self.code_length = code_length
@@ -90,18 +91,17 @@ class MastermindAgent():
 
         # Extract different parts of percepts.
         self.guess_counter, self.last_guess, self.in_place, self.in_colour = percepts
-        for code_length in self.calc_first_guess_entropy():
-            for key in code_length:
-                print(key, code_length[key])
-            print('***********************************************')
-        exit(0)
+        # for code_length in self.calc_first_guess_entropy():
+        #     for key in code_length:
+        #         print(key, code_length[key])
+        #     print('***********************************************')
         if self.guess_counter == 0:
             self.reset_game()
 
             return self.first_guess
-
         self.generate_possible_codes()
-        choice = self.calculate_entropies()
+        choice = random.choice(self.possible_codes)
+        # choice = (self.calculate_entropies())
 
         return choice
 
@@ -147,13 +147,13 @@ class MastermindAgent():
     def get_entropies(self, codes):
 
         with ProcessPoolExecutor(max_workers=mp.cpu_count()) as executor:
-            entropies = list(executor.map(self.partition, codes))
+            entropies = list(tqdm(executor.map(self.partition, codes)))
 
         return entropies
     
     def partition(self, trial):
         counts = {output: 0 for output in self.possible_outputs}
-        for code in self.possible_codes:
+        for code in (self.possible_codes):
             output = evaluate_guess(code, trial)
             counts[output] += 1
         return self.entropy(counts.values())
@@ -183,7 +183,7 @@ class MastermindAgent():
 
     def calc_first_guess_entropy(self):
         all_entropies = []
-        for i in range(3, 6):
+        for i in range(4, 5):
             first_codes = self.get_first_codes(i)
             all_codes = np.array(list(
             itertools.product(self.colours, repeat=i)))
