@@ -8,16 +8,12 @@ game_settings = {
 
    "maxNumberOfGuesses": 10,     # max. number of guesses per game
 
-   "totalNumberOfGames": 500,    # total number of games played
+   "totalNumberOfGames": 100,    # total number of games played
 
    "verbose": False,
 
    "seed": None,                    # seed for random choices of words in the game, None for random seed
    
-   "sample": 0.1,
-   
-   "lower_bound": 900
-
 }
 
 
