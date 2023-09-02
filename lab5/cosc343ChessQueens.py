@@ -9,9 +9,10 @@ import time
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 import random
 import heapq
+from tqdm import tqdm
 WIN = 28
-POPULATION_SIZE = 10000
-SUBSET_SIZE = 0.2
+POPULATION_SIZE = 1000
+SUBSET_SIZE = 0.1
 class ChessQueens:
     
     def __init__(self, size=8):
@@ -101,15 +102,31 @@ class ChessQueens:
         pl.pause(0.01)
         time.sleep(0.01)
 
-def create_new_population(population):
-    for i in range(len(population)):
-        subset = random.sample(population, POPULATION_SIZE* SUBSET_SIZE)
-        parent1, parent2 = top_two_indices(subset)
-        create_child(parent1, parent2)
-    
+def create_new_population(population, scores):
+    new_population = []
+    for i in (range(POPULATION_SIZE)):
+        indices = random.sample(range(POPULATION_SIZE), int(POPULATION_SIZE* SUBSET_SIZE))
+        subset_scores = [scores[j] for j in indices]
+        subset_parents = [population[x] for x in indices]
+        parent1, parent2 = top_two_indices(subset_scores)
+        new_population.append(create_child(subset_parents[parent1], subset_parents[parent2]))
+    return new_population
 
 def create_child(parent1, parent2):
-    pass
+    child = []
+    for value in range(len(parent1)):
+        rand = random.random()
+        if rand < 0.1:
+            child.append(random.randint(0,63))
+        elif rand > 0.45:
+            child.append(parent1[value])
+        else:
+            child.append(parent2[value])
+            
+    child_set = set(child)
+    if len(child_set) != len(child):
+       return create_child(parent1, parent2) 
+    return child
 
 
 
@@ -131,13 +148,15 @@ def top_two_indices(lst):
             top2 = i
 
     return [top1, top2]
-def solve():
+
+def solve(board):
     population = []
     for i in range(POPULATION_SIZE):
         population.append(np.random.permutation(size*size)[:size])
     #Show 5 different random queen distributions
     win = []
-    for i in range(0,10):
+    for i in range(0,10000):
+        print('Generation: ',i)
         scores = []
         for parent in population:
             score = board.nonattacking_pairs(parent)
@@ -146,20 +165,27 @@ def solve():
             scores.append(score)
         max_score = np.argmax(scores)
         if scores[max_score] == WIN:
+            print((population[max_score]))
+            print(scores[max_score])
+            print("WIN")
             return population[max_score]
-        create_new_population(population)
-        
+        print((population[max_score]))
+        print(scores[max_score])
+        board.show_state(population[max_score])
+        population = create_new_population(population,scores)
+    return population[max_score]
         # Generate random chromosome by generating
         # random permutation of size*size indexes
         # and then picking the first size-indexex
         #Show the new state
-        board.show_state(c.tolist())
-        time.sleep(0.5)        
 
 
 if __name__ == '__main__':
     #Create instance of chess board visualisation
     size = 8
     board = ChessQueens(size=size)
-    solve(board)
+    win_state = solve(board)
+    print('Win state',win_state)
+    board.show_state(win_state)
+    
     
