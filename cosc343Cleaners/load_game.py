@@ -5,7 +5,7 @@ __email__ = "lech.szymanski@otago.ac.nz"
 import tkinter as tk
 from tkinter import filedialog
 import sys
-from cleaners import CleanersGame
+from gui_cleaners import CleanersGame
 
 def main(argv):
     # Load the defaults

@@ -158,13 +158,13 @@ class Player:
 
         else:
             if not os.path.exists(playerFile):
-                self.game.throwError("Error! Agent file '%s' not found" % self.playerFile, self.playerid)
+                self.game.throwError("Error! Agent file '%s' not found" % self.playerFile, playerid)
                 return
 
             if len(playerFile) > 3 and playerFile[-3:].lower() == '.py':
                 playerModule = playerFile[:-3]
             else:
-                self.game.throwError("Error! Agent file %s needs a '.py' extension" % self.playerFile, self.playerid)
+                self.game.throwError("Error! Agent file %s needs a '.py' extension" % self.playerFile, playerid)
                 return
 
             # Import agent file as module
@@ -215,7 +215,7 @@ class Player:
                         return
 
                     if trainSession[1] < 0:
-                        self.game.throwError("Agent's 'trainingSchedule' should be a list of (str,int) tuples, where int corresponds to the number of train generations.",self.playerid)
+                        self.game.throwError("Agent's 'trainingSchedule' should be a list of (str,int) tuples, where int corresponds to the number of train generations.",selfp.playerid)
                         return
 
                     totTrainEpochs += trainSession[1]
@@ -589,15 +589,15 @@ class CleanersPlay:
                                 self.map[yo, xo,0] = 0
                 break
 
-        # if self.showGame is not None or self.saveGame:
-        #     vis_cleaners, stats = self.vis_update(players)
-        #     vis_data = (self.map[:,:,0], vis_cleaners, stats)
+        if self.showGame is not None or self.saveGame:
+            vis_cleaners, stats = self.vis_update(players)
+            vis_data = (self.map[:,:,0], vis_cleaners, stats)
 
-        #     if self.showGame is not None:
-        #         self.game.vis.show(vis_data, turn=0, titleStr=self.showGame)
+            if self.showGame is not None:
+                self.game.vis.show(vis_data, turn=0, titleStr=self.showGame)
 
-        #     if self.saveGame:
-        #         self.vis_data = [vis_data]
+            if self.saveGame:
+                self.vis_data = [vis_data]
 
         all_avatars = []
         for player in players:
@@ -771,7 +771,7 @@ class CleanersPlay:
 
             if not self.game.game_play:
                 return None
-            '''
+
             if self.showGame is not None or self.saveGame:
 
                 vis_cleaners, stats = self.vis_update(players)
@@ -782,7 +782,7 @@ class CleanersPlay:
 
                 if self.saveGame:
                     self.vis_data.append(vis_data)
-            '''
+
             if gameDone:
                 break
 
@@ -814,10 +814,10 @@ class CleanersPlay:
             saveFile = os.path.join(savePath, saveStr)
 
             self.game.game_saves.append(saveFile)
-            '''
+
             with gzip.open(saveFile, 'w') as f:
                 pickle.dump((players[0].name, name2, self.vis_data, (Y,X)), f)
-            '''
+
         scores = []
         for k, player in enumerate(players):
             scores.append(0)
@@ -871,7 +871,7 @@ class CleanersGame:
 
     # Run the game
     def run(self,player1File, player2File,visResolution=(720,480), visSpeed='normal',savePath="saved",
-            trainers=[("random_agent.py","random")],runs = list(range(1, 1001)), shows = list(range(1, 1001)),jointname=False):
+            trainers=[("random_agent.py","random")],runs = [1,2,3,4,5], shows = [1,2,3,4,5],jointname=False):
 
         self.players = list()
 
@@ -1054,8 +1054,8 @@ class CleanersGame:
                 for p in players:
                     playerStrings += [p.pname]
 
-            #self.vis = vis.visualiser(gridSize=self.players[0].game.gridSize,speed=visSpeed,playerStrings=playerStrings,
-            #                      resolution=visResolution)
+            self.vis = vis.visualiser(gridSize=self.players[0].game.gridSize,speed=visSpeed,playerStrings=playerStrings,
+                                  resolution=visResolution)
 
         if trainGames is None:
             nRuns = len(run_games)
@@ -1182,12 +1182,11 @@ class CleanersGame:
                     else:
                         traceback.print_exc()
                         sys.exit(-1)
-        '''
+
         if len(show_games) > 0:
-            #time.sleep(5)
-            #del self.vis
-            #self.vis = None
-        '''
+            time.sleep(5)
+            del self.vis
+            self.vis = None
 
     # Play visualisation of a saved game
     @staticmethod

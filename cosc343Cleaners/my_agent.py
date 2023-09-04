@@ -6,7 +6,7 @@ import random
 import numpy as np
 
 agentName = "<my_agent>"
-trainingSchedule = [("random_agent.py", 5), ("self", 1)]    # Train against random agent for 5 generations,
+trainingSchedule = [("random_agent.py", 500)]    # Train against random agent for 5 generations,
                                                             # then against self for 1 generation
 SUBSET_SIZE = 0.1
 # This is the class for your cleaner/agent
