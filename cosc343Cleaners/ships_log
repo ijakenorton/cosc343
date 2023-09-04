@@ -1,3 +1,4 @@
 changed SUBSET_SIZE = 0.2
 elitism 2
 MUTATION= 0.01
+changed bias to 50
