@@ -6,9 +6,9 @@ import random
 import numpy as np
 
 agentName = "<my_agent>"
-trainingSchedule = [("random_agent.py", 500)]    # Train against random agent for 5 generations,
-                                                            # then against self for 1 generation
-SUBSET_SIZE = 0.1
+trainingSchedule = [("random_agent.py", 500)]   
+SUBSET_SIZE = 0.3
+MUTATION = 0.01
 # This is the class for your cleaner/agent
 class Cleaner:
 
@@ -21,7 +21,7 @@ class Cleaner:
         self.nActions = nActions
         self.gridSize = gridSize
         self.maxTurns = maxTurns
-        self.chromosome = np.stack([np.append(np.random.uniform(0, 100, 63), np.random.uniform(0, 10)) for _ in range(4)])
+        self.chromosome = np.stack([np.append(np.random.uniform(0, 100, 63), np.random.uniform(0, 50)) for _ in range(4)])
 
 
     def AgentFunction(self, percepts):
@@ -151,17 +151,20 @@ def newGeneration(old_population):
     maxTurns = old_population[0].maxTurns
 
 
-    fitness = evalFitness(old_population)
+    fitness = list(evalFitness(old_population))
 
     # At this point you should sort the old_population cleaners according to fitness, setting it up for parent
     # selection.
     # .
     # .
     # .
+    elite1,elite2  = top_two_indices(fitness)
 
     # Create new population list...
     new_population = list()
-    for n in range(N):
+    new_population.append(old_population[elite1])
+    new_population.append(old_population[elite2])
+    for n in range(N-2):
 
         # Create a new cleaner
         new_cleaner = Cleaner(nPercepts, nActions, gridSize, maxTurns)
@@ -173,7 +176,7 @@ def newGeneration(old_population):
         for i in range(0, len(subset_parents[parent1].chromosome)):
             for j in range(len(subset_parents[parent1].chromosome[i])):
                 rand = random.random()
-                if rand < 0.01:
+                if rand < MUTATION:
                     new_cleaner.chromosome[i][j] = (random.randint(0,100))
                 elif rand > 0.49:
                     new_cleaner.chromosome[i][j] = (subset_parents[parent1].chromosome[i][j])

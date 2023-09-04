@@ -22,7 +22,7 @@ game_settings = {
    "nTurns": 100,
 
    # Speed of visualisation ('slow','normal','fast')
-   "visSpeed": 'normal',
+   "visSpeed": 'fast',
 
    # Visualisation resolution
    "visResolution": (1280, 720),
