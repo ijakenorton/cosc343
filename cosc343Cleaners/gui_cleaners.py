@@ -871,7 +871,7 @@ class CleanersGame:
 
     # Run the game
     def run(self,player1File, player2File,visResolution=(720,480), visSpeed='normal',savePath="saved",
-            trainers=[("random_agent.py","random")],runs = [1,2,3,4,5], shows = [1,2,3,4,5],jointname=False):
+            trainers=[("random_agent.py","random")],runs = list(range(1, 10)), shows = list(range(1, 10)),jointname=False):
 
         self.players = list()
 

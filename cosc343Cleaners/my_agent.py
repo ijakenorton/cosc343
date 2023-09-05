@@ -9,6 +9,10 @@ agentName = "<my_agent>"
 trainingSchedule = [("random_agent.py", 500)]   
 SUBSET_SIZE = 0.3
 MUTATION = 0.01
+avg_fitnesses = []
+fitness_function = "cleaned"
+with open('averages.txt', 'a') as file:
+    out_string = fitness_function + "\n"
 # This is the class for your cleaner/agent
 class Cleaner:
 
@@ -22,6 +26,7 @@ class Cleaner:
         self.gridSize = gridSize
         self.maxTurns = maxTurns
         self.chromosome = np.stack([np.append(np.random.uniform(0, 100, 63), np.random.uniform(0, 50)) for _ in range(4)])
+
 
 
     def AgentFunction(self, percepts):
@@ -63,7 +68,7 @@ class Cleaner:
         # through 'self.chromosome'.
         #
         flattened_visual = visual.reshape(-1)
-        status = np.array([energy, bin, fails])
+        status = np.array([energy, bin*10, fails])
         tensor = np.concatenate((flattened_visual, status))
         # The 'actions' variable must be returned, and it must be a 4-item list or a 4-dim numpy vector
 
@@ -130,7 +135,7 @@ def evalFitness(population):
         # You SHOULD consider augmenting it with information from other stats as well.  You DON'T HAVE TO make use
         # of every stat.
 
-        fitness[n] = cleaner.game_stats['cleaned']
+        fitness[n] = cleaner.game_stats[fitness_function]
 
     return fitness
 
@@ -187,7 +192,11 @@ def newGeneration(old_population):
 
     # At the end you need to compute the average fitness and return it along with your new population
     avg_fitness = np.mean(fitness)
+        
+    with open('averages.txt', 'a') as file:
+        file.write(str(avg_fitness) + " ")
 
+    
     return (new_population, avg_fitness)
 
 def top_two_indices(lst):
