@@ -1,18 +1,44 @@
-__author__ = "<your name>"
+__author__ = "<Jake Norton>"
 __organization__ = "COSC343/AIML402, University of Otago"
-__email__ = "<your e-mail>"
+__email__ = "<norja159@student.otago.ac.nz>"
 
 import random
 import numpy as np
-
+from settings import game_settings
 agentName = "<my_agent>"
-trainingSchedule = [("random_agent.py", 500)]   
+# Initialization of your variables
+NUM_ROUNDS = 50
+out_file = 'testing.txt'
+trainingSchedule = [("random_agent.py", NUM_ROUNDS)]
 SUBSET_SIZE = 0.3
+grid_size = game_settings['gridSize']
+rows, cols = grid_size
+origin = [int(rows/2), int(cols/2)]
 MUTATION = 0.01
 avg_fitnesses = []
-fitness_function = "cleaned"
-with open('averages.txt', 'a') as file:
-    out_string = fitness_function + "\n"
+left = -1
+right = 1
+current_best_population = None
+current_best_fitness = 1
+ELITE_PERCENTAGE = 0.3
+current_round = 1
+fitness_function = ["cleaned"]
+
+# Write these initial values to 'averages.txt'
+with open(out_file, 'a') as file:
+    file.write("------\n")  # A separator for better readability for each run
+    file.write(f"Training Schedule: {trainingSchedule}\n")
+    file.write(f"SUBSET_SIZE: {SUBSET_SIZE}\n")
+    file.write(f"MUTATION: {MUTATION}\n")
+    file.write(f"Average Fitnesses: {avg_fitnesses}\n")
+    file.write(f"Current Best Population: {current_best_population}\n")
+    file.write(f"Current Best Fitness: {current_best_fitness}\n")
+    file.write(f"Elite percentage: {ELITE_PERCENTAGE}\n")
+    file.write(f"NUM_ROUNDS: {NUM_ROUNDS}\n")
+    file.write(f"Current Round: {current_round}\n")
+    file.write(f"Fitness Function: {fitness_function}\n")
+    file.write("------\n")  # A separator for better readability for each run
+
 # This is the class for your cleaner/agent
 class Cleaner:
 
@@ -28,7 +54,13 @@ class Cleaner:
         self.chromosome = np.stack([np.append(np.random.uniform(0, 100, 63), np.random.uniform(0, 50)) for _ in range(4)])
 
 
-
+    def compute_direction(self, turn):
+        if turn == left and self.direction == 0:
+            self.direction = 3
+        elif turn == right and self.direction == 3:
+            self.direction = 0
+        else:
+            self.direction += turn
     def AgentFunction(self, percepts):
 
         # The percepts are a tuple consisting of four pieces of information
@@ -68,7 +100,7 @@ class Cleaner:
         # through 'self.chromosome'.
         #
         flattened_visual = visual.reshape(-1)
-        status = np.array([energy, bin*10, fails])
+        status = np.array([energy, bin, fails])
         tensor = np.concatenate((flattened_visual, status))
         # The 'actions' variable must be returned, and it must be a 4-item list or a 4-dim numpy vector
 
@@ -93,6 +125,10 @@ class Cleaner:
         # perform random actions - your agents' actions should be deterministic from
         # computation based on self.chromosome and percepts
         action_vector = self.compute_action(tensor)
+        if fails ==0:
+            self.previous_action = np.argmax(action_vector)
+        else:
+            self.previous_action = -1
         return action_vector
     
     
@@ -134,14 +170,16 @@ def evalFitness(population):
         # This fitness functions considers total number of cleaned squares.  This may NOT be the best fitness function.
         # You SHOULD consider augmenting it with information from other stats as well.  You DON'T HAVE TO make use
         # of every stat.
-
-        fitness[n] = cleaner.game_stats[fitness_function]
+        current_fitness = 0
+        for metric in fitness_function:
+            current_fitness += cleaner.game_stats[metric]
+        fitness[n] = current_fitness
 
     return fitness
 
 
 def newGeneration(old_population):
-
+    global current_round, current_best_fitness, current_best_population
     # This function should return a tuple consisting of:
     # - a list of the new_population of cleaners that is of the same length as the old_population,
     # - the average fitness of the old population
@@ -158,25 +196,22 @@ def newGeneration(old_population):
 
     fitness = list(evalFitness(old_population))
 
-    # At this point you should sort the old_population cleaners according to fitness, setting it up for parent
-    # selection.
-    # .
-    # .
-    # .
-    elite1,elite2  = top_two_indices(fitness)
+    num_elites = int(ELITE_PERCENTAGE * N)
+    elites  = top_n_indices(fitness, num_elites)
 
     # Create new population list...
     new_population = list()
-    new_population.append(old_population[elite1])
-    new_population.append(old_population[elite2])
-    for n in range(N-2):
+    for elite in elites:
+        new_population.append(old_population[elite])
+
+    for n in range(N-num_elites):
 
         # Create a new cleaner
         new_cleaner = Cleaner(nPercepts, nActions, gridSize, maxTurns)
         indices = random.sample(range(N), int(N* SUBSET_SIZE))
         subset_scores = [fitness[j] for j in indices]
         subset_parents = [old_population[x] for x in indices]
-        parent1, parent2 = top_two_indices(subset_scores)
+        parent1, parent2 = top_n_indices(subset_scores,2)
         
         for i in range(0, len(subset_parents[parent1].chromosome)):
             for j in range(len(subset_parents[parent1].chromosome[i])):
@@ -192,27 +227,35 @@ def newGeneration(old_population):
 
     # At the end you need to compute the average fitness and return it along with your new population
     avg_fitness = np.mean(fitness)
+    if current_round == 1:
+        current_best_fitness = avg_fitness
+        current_best_population = new_population
         
-    with open('averages.txt', 'a') as file:
+    current_round += 1
+    if avg_fitness > current_best_fitness:
+        current_best_fitness = avg_fitness
+        current_best_population = new_population
+    if current_round == NUM_ROUNDS:
+        with open(out_file, 'a') as file:
+            file.write("\nBest average fitness:\n " + str(current_best_fitness) + "\n")
+            file.write("\nPrevious moves:\n" + str(current_best_population[0].nActions) + "\n")
+            file.write("\nMap:\n" + str(current_best_population[0].map) + "\n")
+            
+        return (current_best_population, current_best_fitness)
+
+    with open(out_file, 'a') as file:
         file.write(str(avg_fitness) + " ")
 
     
     return (new_population, avg_fitness)
 
-def top_two_indices(lst):
+def top_n_indices(lst, n):
     if not lst:
         return []
 
-    if len(lst) == 1:
-        return [0]
+    n = min(n, len(lst))
 
-    top1, top2 = (0, 1) if lst[0] > lst[1] else (1, 0)
+    top_indices = sorted(range(len(lst)), key=lambda i: lst[i], reverse=True)[:n]
 
-    for i, num in enumerate(lst[2:], 2):
-        if num > lst[top1]:
-            top2 = top1
-            top1 = i
-        elif num > lst[top2]:
-            top2 = i
+    return top_indices
 
-    return [top1, top2]

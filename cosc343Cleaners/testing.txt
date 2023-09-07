@@ -1,0 +1,387 @@
+------
+Training Schedule: [('random_agent.py', 1)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 1
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+------
+Training Schedule: [('random_agent.py', 1)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 1
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+------
+Training Schedule: [('random_agent.py', 1)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 1
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+------
+Training Schedule: [('random_agent.py', 2)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 2
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+------
+Training Schedule: [('random_agent.py', 10)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 10
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+------
+Training Schedule: [('random_agent.py', 2)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 2
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+
+Best average fitness: 1.375
+------
+Training Schedule: [('random_agent.py', 2)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 2
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+
+Best average fitness: 1.3
+
+Previous moves: [<my_agent.Cleaner object at 0x7f5ccad73820>, <my_agent.Cleaner object at 0x7f5ccad73e50>, <my_agent.Cleaner object at 0x7f5ccad73f40>, <my_agent.Cleaner object at 0x7f5ccad73b20>, <my_agent.Cleaner object at 0x7f5ccad73ac0>, <my_agent.Cleaner object at 0x7f5ccad739a0>, <my_agent.Cleaner object at 0x7f5ccad73970>, <my_agent.Cleaner object at 0x7f5ccad738b0>, <my_agent.Cleaner object at 0x7f5ccad73880>, <my_agent.Cleaner object at 0x7f5ccad737f0>, <my_agent.Cleaner object at 0x7f5ccad73790>, <my_agent.Cleaner object at 0x7f5ccad736a0>, <my_agent.Cleaner object at 0x7f5ccad73640>, <my_agent.Cleaner object at 0x7f5ccad73520>, <my_agent.Cleaner object at 0x7f5ccad734f0>, <my_agent.Cleaner object at 0x7f5ccad735e0>, <my_agent.Cleaner object at 0x7f5ccad70610>, <my_agent.Cleaner object at 0x7f5ccad726e0>, <my_agent.Cleaner object at 0x7f5ccad72740>, <my_agent.Cleaner object at 0x7f5ccad70820>, <my_agent.Cleaner object at 0x7f5ccad727a0>, <my_agent.Cleaner object at 0x7f5ccad70880>, <my_agent.Cleaner object at 0x7f5ccad72800>, <my_agent.Cleaner object at 0x7f5ccad708e0>, <my_agent.Cleaner object at 0x7f5ccad72860>, <my_agent.Cleaner object at 0x7f5ccad70940>, <my_agent.Cleaner object at 0x7f5ccad728c0>, <my_agent.Cleaner object at 0x7f5ccad709a0>, <my_agent.Cleaner object at 0x7f5ccad72920>, <my_agent.Cleaner object at 0x7f5ccad70a00>, <my_agent.Cleaner object at 0x7f5ccad72980>, <my_agent.Cleaner object at 0x7f5ccad70a60>, <my_agent.Cleaner object at 0x7f5ccad729e0>, <my_agent.Cleaner object at 0x7f5ccad70ac0>, <my_agent.Cleaner object at 0x7f5ccad72a40>, <my_agent.Cleaner object at 0x7f5ccad70b20>, <my_agent.Cleaner object at 0x7f5ccad72aa0>, <my_agent.Cleaner object at 0x7f5ccad70b80>, <my_agent.Cleaner object at 0x7f5ccad72b00>, <my_agent.Cleaner object at 0x7f5ccad70be0>]
+------
+Training Schedule: [('random_agent.py', 2)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 2
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+
+Best average fitness: 1.925
+
+Previous moves: [1914.816643410462, 1648.7425926313467, 1395.0499517897542, 1110.8421013437369, 1053.1278460863105, 1086.8152239869003, 1152.599526229237, 1010.2546314111262, 689.9248297016946, 669.3859447679346, 774.2585140656097, 1712.7684655793717, 1658.1659320898345, 1440.009756654345, 1391.8275875239365, 1220.6834818244843, 1077.0092593571737, 1034.4343990964912, 1152.9240346791505, 1247.077505762075, 1206.606768973502, 1094.9201354140625, 1073.8656592548816, 1052.8111830957005, 1031.7567069365195, 1010.7022307773384, 989.6477546181575, 968.5932784589763, 947.5388022997954, 926.4843261406143, 963.4057312394528, 278.09498099745525]
+------
+Training Schedule: [('random_agent.py', 2)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 2
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+
+Best average fitness: 1.5
+
+Previous moves: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+------
+Training Schedule: [('random_agent.py', 2)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 2
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+------
+Training Schedule: [('random_agent.py', 2)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 2
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+------
+Training Schedule: [('random_agent.py', 2)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 2
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+
+Best average fitness: 1.8
+
+Previous moves: [[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]]
+------
+Training Schedule: [('random_agent.py', 2)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 2
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+------
+Training Schedule: [('random_agent.py', 2)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 2
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+
+Best average fitness:
+ 1.75
+
+Previous moves:
+4
+
+Map:
+[[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]]
+------
+Training Schedule: [('random_agent.py', 2)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 2
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+
+Best average fitness:
+ 1.95
+
+Previous moves:
+4
+
+Map:
+[[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]]
+------
+Training Schedule: [('random_agent.py', 2)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 2
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+------
+Training Schedule: [('random_agent.py', 4)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 4
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+1.8 3.325 
+Best average fitness:
+ 3.325
+
+Previous moves:
+4
+
+Map:
+[[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]]
+------
+Training Schedule: [('random_agent.py', 50)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 50
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+1.9 3.525 3.875 3.75 3.825 3.975 4.45 3.975 4.35 3.95 4.65 3.575 3.925 3.725 4.775 4.125 4.075 3.25 3.55 3.775 4.8 4.425 4.0 3.6 4.15 3.925 4.275 5.0 3.45 3.7 4.125 4.025 4.325 4.75 4.45 4.05 4.0 4.35 4.525 4.45 4.4 4.5 4.35 4.625 4.725 5.15 4.875 4.225 
+Best average fitness:
+ 5.15
+
+Previous moves:
+4
+
+Map:
+[[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]]
+------
+Training Schedule: [('random_agent.py', 50)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 50
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+1.625 2.85 3.875 3.625 4.15 4.05 3.475 3.65 4.3 4.3 4.375 3.5 3.7 4.25 4.7 3.75 4.15 4.025 4.775 3.675 5.675 4.5 3.475 4.25 4.65 4.6 3.875 4.05 4.35 4.9 4.9 5.1 5.925 5.325 5.5 4.225 5.9 6.2 6.35 5.875 6.2 6.125 6.15 5.675 5.675 6.0 6.575 5.35 
+Best average fitness:
+ 6.575
+
+Previous moves:
+4
+
+Map:
+[[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]]
+------
+Training Schedule: [('random_agent.py', 50)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 50
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+2.25 2.975 3.3 ------
+Training Schedule: [('random_agent.py', 50)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.4
+NUM_ROUNDS: 50
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+------
+Training Schedule: [('random_agent.py', 50)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.3
+NUM_ROUNDS: 50
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+1.925 ------
+Training Schedule: [('random_agent.py', 50)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.3
+NUM_ROUNDS: 50
+Current Round: 1
+Fitness Function: ['cleaned']
+------
+------
+Training Schedule: [('random_agent.py', 50)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.3
+NUM_ROUNDS: 50
+Current Round: 1
+Fitness Function: ['cleaned']
+------

@@ -25,10 +25,10 @@ game_settings = {
    "visSpeed": 'fast',
 
    # Visualisation resolution
-   "visResolution": (1280, 720),
+   "visResolution": (1920, 1080),
 
    # Wheter to save final games
-   "saveFinalGames": True,
+   "saveFinalGames": False,
 
    "seed": 0   # seed for game choices, None for random seed
 }
