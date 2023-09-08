@@ -1,291 +1,18 @@
 ------
-Training Schedule: [('random_agent.py', 1)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 1
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-------
-Training Schedule: [('random_agent.py', 1)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 1
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-------
-Training Schedule: [('random_agent.py', 1)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 1
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-------
-Training Schedule: [('random_agent.py', 2)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 2
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-------
-Training Schedule: [('random_agent.py', 10)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 10
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-------
-Training Schedule: [('random_agent.py', 2)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 2
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-
-Best average fitness: 1.375
-------
-Training Schedule: [('random_agent.py', 2)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 2
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-
-Best average fitness: 1.3
-
-Previous moves: [<my_agent.Cleaner object at 0x7f5ccad73820>, <my_agent.Cleaner object at 0x7f5ccad73e50>, <my_agent.Cleaner object at 0x7f5ccad73f40>, <my_agent.Cleaner object at 0x7f5ccad73b20>, <my_agent.Cleaner object at 0x7f5ccad73ac0>, <my_agent.Cleaner object at 0x7f5ccad739a0>, <my_agent.Cleaner object at 0x7f5ccad73970>, <my_agent.Cleaner object at 0x7f5ccad738b0>, <my_agent.Cleaner object at 0x7f5ccad73880>, <my_agent.Cleaner object at 0x7f5ccad737f0>, <my_agent.Cleaner object at 0x7f5ccad73790>, <my_agent.Cleaner object at 0x7f5ccad736a0>, <my_agent.Cleaner object at 0x7f5ccad73640>, <my_agent.Cleaner object at 0x7f5ccad73520>, <my_agent.Cleaner object at 0x7f5ccad734f0>, <my_agent.Cleaner object at 0x7f5ccad735e0>, <my_agent.Cleaner object at 0x7f5ccad70610>, <my_agent.Cleaner object at 0x7f5ccad726e0>, <my_agent.Cleaner object at 0x7f5ccad72740>, <my_agent.Cleaner object at 0x7f5ccad70820>, <my_agent.Cleaner object at 0x7f5ccad727a0>, <my_agent.Cleaner object at 0x7f5ccad70880>, <my_agent.Cleaner object at 0x7f5ccad72800>, <my_agent.Cleaner object at 0x7f5ccad708e0>, <my_agent.Cleaner object at 0x7f5ccad72860>, <my_agent.Cleaner object at 0x7f5ccad70940>, <my_agent.Cleaner object at 0x7f5ccad728c0>, <my_agent.Cleaner object at 0x7f5ccad709a0>, <my_agent.Cleaner object at 0x7f5ccad72920>, <my_agent.Cleaner object at 0x7f5ccad70a00>, <my_agent.Cleaner object at 0x7f5ccad72980>, <my_agent.Cleaner object at 0x7f5ccad70a60>, <my_agent.Cleaner object at 0x7f5ccad729e0>, <my_agent.Cleaner object at 0x7f5ccad70ac0>, <my_agent.Cleaner object at 0x7f5ccad72a40>, <my_agent.Cleaner object at 0x7f5ccad70b20>, <my_agent.Cleaner object at 0x7f5ccad72aa0>, <my_agent.Cleaner object at 0x7f5ccad70b80>, <my_agent.Cleaner object at 0x7f5ccad72b00>, <my_agent.Cleaner object at 0x7f5ccad70be0>]
-------
-Training Schedule: [('random_agent.py', 2)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 2
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-
-Best average fitness: 1.925
-
-Previous moves: [1914.816643410462, 1648.7425926313467, 1395.0499517897542, 1110.8421013437369, 1053.1278460863105, 1086.8152239869003, 1152.599526229237, 1010.2546314111262, 689.9248297016946, 669.3859447679346, 774.2585140656097, 1712.7684655793717, 1658.1659320898345, 1440.009756654345, 1391.8275875239365, 1220.6834818244843, 1077.0092593571737, 1034.4343990964912, 1152.9240346791505, 1247.077505762075, 1206.606768973502, 1094.9201354140625, 1073.8656592548816, 1052.8111830957005, 1031.7567069365195, 1010.7022307773384, 989.6477546181575, 968.5932784589763, 947.5388022997954, 926.4843261406143, 963.4057312394528, 278.09498099745525]
-------
-Training Schedule: [('random_agent.py', 2)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 2
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-
-Best average fitness: 1.5
-
-Previous moves: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
-------
-Training Schedule: [('random_agent.py', 2)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 2
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-------
-Training Schedule: [('random_agent.py', 2)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 2
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-------
-Training Schedule: [('random_agent.py', 2)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 2
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-
-Best average fitness: 1.8
-
-Previous moves: [[0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- ...
- [0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]]
-------
-Training Schedule: [('random_agent.py', 2)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 2
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-------
-Training Schedule: [('random_agent.py', 2)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 2
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-
-Best average fitness:
- 1.75
-
-Previous moves:
-4
-
-Map:
-[[0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- ...
- [0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]]
-------
-Training Schedule: [('random_agent.py', 2)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 2
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-
-Best average fitness:
- 1.95
-
-Previous moves:
-4
-
-Map:
-[[0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- ...
- [0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]]
-------
-Training Schedule: [('random_agent.py', 2)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 2
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-------
-Training Schedule: [('random_agent.py', 4)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 4
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-1.8 3.325 
-Best average fitness:
- 3.325
-
-Previous moves:
-4
-
-Map:
-[[0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- ...
- [0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]]
-------
 Training Schedule: [('random_agent.py', 50)]
 SUBSET_SIZE: 0.3
 MUTATION: 0.01
 Average Fitnesses: []
 Current Best Population: None
 Current Best Fitness: 1
-Elite percentage: 0.4
+Elite percentage: 0.3
 NUM_ROUNDS: 50
 Current Round: 1
-Fitness Function: ['cleaned']
+Fitness Function: ['emptied']
 ------
-1.9 3.525 3.875 3.75 3.825 3.975 4.45 3.975 4.35 3.95 4.65 3.575 3.925 3.725 4.775 4.125 4.075 3.25 3.55 3.775 4.8 4.425 4.0 3.6 4.15 3.925 4.275 5.0 3.45 3.7 4.125 4.025 4.325 4.75 4.45 4.05 4.0 4.35 4.525 4.45 4.4 4.5 4.35 4.625 4.725 5.15 4.875 4.225 
+-31.915 -10.76375 -10.942499999999999 -1.8837499999999996 3.32125 3.56 4.26625 1.8475000000000001 4.89875 4.98375 2.9412499999999997 3.70625 2.8024999999999998 5.12 3.8425000000000002 4.415 3.5762500000000004 0.19625000000000004 0.7175000000000002 4.981249999999999 2.8575000000000004 4.2725 4.32125 3.2649999999999997 0.6762500000000001 3.8525000000000005 4.2275 4.956250000000001 5.18125 4.43375 3.41125 3.83125 4.13125 4.397499999999999 -1.1412499999999999 3.16375 4.44125 3.34125 3.7125 2.0275 4.9087499999999995 3.8599999999999994 4.755 5.21375 3.2362499999999996 4.7875 2.7949999999999995 3.66125 
 Best average fitness:
- 5.15
+ 5.21375
 
 Previous moves:
 4
@@ -298,57 +25,6 @@ Map:
  [0. 0. 0. ... 0. 0. 0.]
  [0. 0. 0. ... 0. 0. 0.]
  [0. 0. 0. ... 0. 0. 0.]]
-------
-Training Schedule: [('random_agent.py', 50)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 50
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-1.625 2.85 3.875 3.625 4.15 4.05 3.475 3.65 4.3 4.3 4.375 3.5 3.7 4.25 4.7 3.75 4.15 4.025 4.775 3.675 5.675 4.5 3.475 4.25 4.65 4.6 3.875 4.05 4.35 4.9 4.9 5.1 5.925 5.325 5.5 4.225 5.9 6.2 6.35 5.875 6.2 6.125 6.15 5.675 5.675 6.0 6.575 5.35 
-Best average fitness:
- 6.575
-
-Previous moves:
-4
-
-Map:
-[[0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- ...
- [0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]]
-------
-Training Schedule: [('random_agent.py', 50)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 50
-Current Round: 1
-Fitness Function: ['cleaned']
-------
-2.25 2.975 3.3 ------
-Training Schedule: [('random_agent.py', 50)]
-SUBSET_SIZE: 0.3
-MUTATION: 0.01
-Average Fitnesses: []
-Current Best Population: None
-Current Best Fitness: 1
-Elite percentage: 0.4
-NUM_ROUNDS: 50
-Current Round: 1
-Fitness Function: ['cleaned']
-------
 ------
 Training Schedule: [('random_agent.py', 50)]
 SUBSET_SIZE: 0.3
@@ -359,9 +35,24 @@ Current Best Fitness: 1
 Elite percentage: 0.3
 NUM_ROUNDS: 50
 Current Round: 1
-Fitness Function: ['cleaned']
+Fitness Function: ['emptied']
 ------
-1.925 ------
+-48.705 -9.2475 -0.4299999999999997 -4.957500000000001 2.8200000000000003 2.90125 -3.2649999999999997 0.6762499999999999 -7.521249999999999 -0.4125 -5.025 0.38624999999999987 1.74375 0.1337500000000002 0.22749999999999987 1.9149999999999998 -0.04250000000000007 -0.9199999999999999 0.3024999999999999 -1.1162499999999995 -0.9099999999999998 -0.14375 3.1374999999999997 -5.2625 2.19125 -0.20124999999999993 2.44 0.18249999999999994 5.40625 3.10625 2.17875 0.032500000000000286 0.9525000000000006 0.0849999999999996 2.50875 -0.42374999999999974 0.9237499999999998 0.9100000000000004 1.6475000000000002 2.07 1.29125 0.8262499999999997 4.16875 3.533749999999999 2.8549999999999995 4.3862499999999995 2.3599999999999994 2.80625 
+Best average fitness:
+ 4.3862499999999995
+
+Previous moves:
+4
+
+Map:
+[[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]]
+------
 Training Schedule: [('random_agent.py', 50)]
 SUBSET_SIZE: 0.3
 MUTATION: 0.01
@@ -371,8 +62,23 @@ Current Best Fitness: 1
 Elite percentage: 0.3
 NUM_ROUNDS: 50
 Current Round: 1
-Fitness Function: ['cleaned']
+Fitness Function: ['emptied']
 ------
+-25.36 -2.63375 1.9775000000000003 -0.8700000000000001 1.0612499999999998 -1.3212500000000005 -1.7274999999999998 1.8562499999999997 2.8137499999999998 3.21 1.32375 3.3287499999999994 -0.39750000000000013 3.0524999999999998 2.8 3.4675 1.2524999999999997 2.4 4.455 4.07625 4.84125 3.0975 2.6 2.9575 2.8225000000000002 1.6125 1.5987499999999997 -0.03500000000000014 3.5275 3.3449999999999998 3.6399999999999997 2.34 2.3625 4.595 3.9412499999999993 2.8899999999999997 3.2475 3.3287500000000003 4.0287500000000005 2.57 5.295 3.4387499999999998 3.9237499999999996 4.1125 2.60625 4.4875 4.6925 3.4537499999999994 
+Best average fitness:
+ 5.295
+
+Previous moves:
+4
+
+Map:
+[[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]]
 ------
 Training Schedule: [('random_agent.py', 50)]
 SUBSET_SIZE: 0.3
@@ -383,5 +89,59 @@ Current Best Fitness: 1
 Elite percentage: 0.3
 NUM_ROUNDS: 50
 Current Round: 1
-Fitness Function: ['cleaned']
+Fitness Function: ['emptied']
 ------
+-4.883750000000002 -1.8625000000000007 1.5687499999999996 1.753749999999999 3.66125 1.9962499999999994 0.5412499999999998 1.3512499999999996 2.3537500000000002 3.8224999999999993 3.4849999999999994 3.49375 3.24375 4.753749999999999 4.005 4.246250000000001 5.3625 4.433750000000001 4.3675 4.38375 4.4825 5.04 5.115 2.6637499999999994 3.9887500000000005 5.121249999999999 4.3062499999999995 4.13 5.0125 5.4 4.7625 2.5475000000000003 5.78125 6.319999999999999 3.3299999999999996 3.2674999999999996 4.4425 4.58875 6.1075 3.3262500000000004 7.475 4.737499999999999 5.60375 5.590000000000001 3.1487499999999997 3.9900000000000007 5.24 5.6925 
+Best average fitness:
+ 7.475
+
+Previous moves:
+4
+
+Map:
+[[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]]
+------
+Training Schedule: [('random_agent.py', 500)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.3
+NUM_ROUNDS: 500
+Current Round: 1
+Fitness Function: ['emptied']
+------
+------
+Training Schedule: [('random_agent.py', 500)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.3
+NUM_ROUNDS: 500
+Current Round: 1
+Fitness Function: ['emptied']
+------
+-10.646250000000002 2.7124999999999995 1.1512499999999997 0.9149999999999995 1.9562499999999994 4.10625 5.21625 3.4575000000000005 5.343749999999999 4.18 4.35625 3.30625 4.0075 5.0024999999999995 6.76375 4.07625 6.08875 3.845 3.8599999999999994 4.16625 4.09125 4.682499999999999 3.5699999999999994 4.123749999999999 4.0337499999999995 4.70125 4.51375 4.4712499999999995 6.61875 4.03125 5.6362499999999995 4.90375 5.47875 5.5375 4.227499999999999 4.65625 5.146249999999999 3.00625 5.53625 2.8737500000000002 5.3175 4.691249999999999 5.6225 5.4 4.39875 5.999999999999999 4.87625 7.1587499999999995 4.38375 3.2362499999999996 3.57125 5.146249999999999 5.375 4.8687499999999995 4.45125 6.796250000000001 4.29625 4.71875 4.53125 6.151249999999999 4.925 5.305 4.35375 6.71625 6.234999999999999 5.70625 4.78125 4.94375 4.1975 4.9875 4.39625 4.30125 3.90125 5.382499999999999 5.61875 5.2075000000000005 4.64 4.1225 4.77875 3.3324999999999996 4.21375 4.578749999999999 5.60625 5.32125 5.11375 3.939999999999999 5.30375 4.91125 5.47375 5.935 5.827500000000001 5.834999999999999 5.15 6.7125 5.65625 6.01875 7.613749999999999 6.15375 7.834999999999999 8.29375 8.098749999999999 7.73125 7.8375 5.334999999999999 8.0775 9.633750000000001 7.075 6.47125 7.3025 6.065 8.7975 7.205000000000001 7.5175 5.82875 8.30625 8.361250000000002 7.416250000000001 9.33625 6.35 6.5 6.182499999999999 8.69625 6.23625 6.014999999999999 6.17125 5.83125 6.265 8.3375 6.503749999999999 6.5387499999999985 8.035 5.725 9.3075 8.5825 6.401249999999999 9.158750000000001 9.6025 8.19875 8.23375 6.859999999999999 6.96125 7.0424999999999995 8.98 8.64875 9.3475 8.4625 9.49375 6.3462499999999995 6.436249999999999 9.48125 11.986250000000002 8.311250000000001 8.0975 10.19875 8.586250000000001 7.623749999999999 9.98625 11.02375 7.3362500000000015 6.651249999999999 8.48625 7.97375 8.8625 7.8925 8.765 7.82625 7.0125 8.48625 5.457499999999999 7.775 8.31625 8.8475 9.040000000000001 7.003749999999999 5.61 8.107499999999998 8.9325 11.242499999999998 8.133750000000001 7.6975 7.815 7.7924999999999995 8.8325 9.422500000000001 8.85375 10.861249999999998 7.421250000000001 6.7675 7.873749999999999 9.11875 9.8475 9.25375 8.5625 7.772500000000001 7.919999999999999 8.57 8.08375 9.3175 9.688749999999999 8.75375 7.6674999999999995 5.779999999999999 9.0625 8.11375 8.757499999999999 8.6875 9.13875 7.6012499999999985 9.04625 8.45 7.2574999999999985 7.16125 8.80875 9.2975 9.16625 8.965 10.97875 7.6275 7.766249999999999 9.2875 7.848750000000001 9.5725 9.721250000000001 8.834999999999999 9.971250000000001 9.982499999999998 10.663750000000002 10.397499999999999 8.445 8.1725 9.31625 9.65625 10.80875 9.51875 10.99375 10.032499999999999 8.5975 10.616249999999999 7.9125 8.58125 7.13875 6.15125 9.653749999999999 9.976249999999999 9.6875 6.597499999999999 8.82 6.4375 11.557500000000001 8.272499999999999 9.48 8.18375 6.3325000000000005 5.07125 10.633750000000001 7.014999999999999 8.66625 9.0125 9.3425 9.5475 9.120000000000001 7.542500000000001 8.31625 11.2875 9.325 9.413750000000002 8.475 10.26875 8.45125 8.66 7.522499999999999 8.620000000000001 6.78125 7.489999999999999 6.1075 9.0675 7.878749999999999 7.41875 7.08625 6.675 9.053749999999999 9.01375 7.8149999999999995 8.905 9.666250000000002 5.472499999999999 6.6049999999999995 6.9925 11.61375 8.803749999999999 7.93 9.1175 9.716249999999999 7.1125 7.55625 7.71625 8.379999999999999 8.6175 6.951249999999999 6.725 10.545 7.503750000000001 9.73125 8.7575 8.2025 8.716249999999999 7.15125 6.6175 8.31125 7.777500000000001 8.842499999999998 11.49625 7.842500000000001 7.9799999999999995 8.903749999999999 8.379999999999999 8.235 8.93125 8.0725 8.49 6.85625 7.77375 10.705 7.5200000000000005 8.3675 10.46375 5.1325 7.6975 7.635 8.665000000000001 10.99625 7.734999999999999 6.32 6.8125 8.53625 6.9887500000000005 7.3775 8.383750000000001 9.052499999999998 11.596250000000001 7.0525 9.52125 9.9525 8.235 5.446249999999999 8.55875 6.525 9.129999999999999 7.8825 9.17 5.562499999999999 7.03375 8.36 5.68375 9.3425 8.936249999999998 7.0612499999999985 9.7375 9.4125 6.883750000000001 7.296250000000001 9.247499999999999 10.825 8.9225 8.67375 9.513750000000002 10.1775 7.904999999999999 7.926249999999999 9.18375 8.1375 8.55 7.921250000000001 8.08125 9.021249999999998 7.547499999999999 6.602500000000001 8.415000000000001 7.99375 9.146249999999998 9.361249999999998 8.93125 7.8012500000000005 7.53125 8.257499999999999 8.376249999999999 8.28 5.616249999999999 8.66875 6.59625 8.03 7.80625 10.01 7.5862500000000015 8.94125 7.4975 10.05625 7.14625 7.128749999999999 7.342499999999999 9.05625 8.675 9.18625 7.84875 8.817499999999999 7.605000000000001 7.28625 9.928749999999999 9.8325 6.0875 9.2025 8.309999999999999 6.8225 7.66625 8.107499999999998 8.23125 8.57375 8.32375 7.6949999999999985 7.23125 6.5550000000000015 8.936250000000001 6.35375 8.39375 9.24 7.821250000000001 7.858750000000001 7.7475 8.398750000000001 8.59625 8.601249999999999 8.425 8.82375 10.588750000000001 6.0249999999999995 7.1137500000000005 9.5725 7.89375 7.5387499999999985 9.466249999999999 7.340000000000001 8.241249999999999 7.77875 7.952500000000001 9.48125 8.811249999999998 10.3025 8.84 9.05125 8.57 9.04375 8.72 8.482499999999998 8.596250000000001 9.538749999999999 8.74625 8.4025 8.92125 6.859999999999999 8.466249999999999 7.796250000000001 7.238749999999999 7.733750000000001 7.33125 8.96125 5.9437500000000005 6.144999999999999 5.952500000000001 9.90625 9.10125 7.22125 6.775 9.338750000000001 7.63875 8.463750000000001 5.976249999999999 7.232499999999999 9.35375 7.49 6.225 8.241249999999999 11.29125 8.473749999999999 9.53125 8.22875 7.639999999999999 8.2775 8.85375 7.945 6.101249999999999 9.34 8.59375 10.36125 9.33125 6.9612500000000015 7.397499999999999 9.74625 9.79625 
+Best average fitness:
+ 11.29125
+
+Previous moves:
+4
+
+Map:
+[[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]]

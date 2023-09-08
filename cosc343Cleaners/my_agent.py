@@ -7,22 +7,25 @@ import numpy as np
 from settings import game_settings
 agentName = "<my_agent>"
 # Initialization of your variables
-NUM_ROUNDS = 50
+NUM_ROUNDS = 500
+
 out_file = 'testing.txt'
 trainingSchedule = [("random_agent.py", NUM_ROUNDS)]
 SUBSET_SIZE = 0.3
-grid_size = game_settings['gridSize']
-rows, cols = grid_size
-origin = [int(rows/2), int(cols/2)]
+GRID_SIZE = game_settings['gridSize']
+ROWS, COLS = GRID_SIZE
+ORIGIN = [[int(ROWS/2), int(COLS/2)]]
 MUTATION = 0.01
 avg_fitnesses = []
-left = -1
-right = 1
 current_best_population = None
 current_best_fitness = 1
 ELITE_PERCENTAGE = 0.3
 current_round = 1
-fitness_function = ["cleaned"]
+LEFT = -1
+RIGHT = 1
+NORTH, EAST, SOUTH, WEST = [-1, 0], [0, 1], [1, 0], [0, -1]
+DIRECTIONS = [NORTH, EAST, SOUTH, WEST]
+fitness_function = ["emptied"]
 
 # Write these initial values to 'averages.txt'
 with open(out_file, 'a') as file:
@@ -51,16 +54,45 @@ class Cleaner:
         self.nActions = nActions
         self.gridSize = gridSize
         self.maxTurns = maxTurns
-        self.chromosome = np.stack([np.append(np.random.uniform(0, 100, 63), np.random.uniform(0, 50)) for _ in range(4)])
+        self.chromosome = np.stack([np.append(np.random.uniform(-1, 1, 63), np.random.uniform(-1, 1)) for _ in range(4)])
+        self.previous_action = 0
+        self.direction = 0
+        self.coordinates = ORIGIN[0].copy()
+        self.map = np.zeros(GRID_SIZE)
+        self.charge_stations = ORIGIN.copy()
+        self.map[tuple(self.coordinates)] += 1
+        self.is_charging = False
 
+    def _wrap_coordinate(self, coord, max_value):
+        return (coord % max_value + max_value) % max_value
 
-    def compute_direction(self, turn):
-        if turn == left and self.direction == 0:
-            self.direction = 3
-        elif turn == right and self.direction == 3:
-            self.direction = 0
-        else:
-            self.direction += turn
+    def move(self, move):
+        
+        if move == 0:
+            # print("yo", move, DIRECTIONS[self.direction], self.coordinates)
+            self.coordinates = list(np.array(self.coordinates) + np.array(DIRECTIONS[self.direction]))
+            # print("coordinates", self.coordinates)
+            self.coordinates = [self._wrap_coordinate(self.coordinates[0], ROWS),
+                                self._wrap_coordinate(self.coordinates[1], COLS)]
+        if move == 3:
+            # print("yo", move, DIRECTIONS[self.direction], self.coordinates)
+            self.coordinates = list(np.array(self.coordinates) - np.array(DIRECTIONS[self.direction]))
+            # print("coordinates", self.coordinates)
+            self.coordinates = [self._wrap_coordinate(self.coordinates[0], ROWS),
+                                self._wrap_coordinate(self.coordinates[1], COLS)]
+        self.map[tuple(self.coordinates)] += 1
+        if self.is_charging and (self.coordinates) not in self.charge_stations:
+            self.charge_stations.append((self.coordinates))
+
+    def compute_direction(self, move):
+        if move == 1:
+            self.direction += RIGHT
+            self.direction = (self._wrap_coordinate(self.direction, len(DIRECTIONS)))
+        if move == 2:
+            self.direction += LEFT
+            self.direction = (self._wrap_coordinate(self.direction, len(DIRECTIONS)))
+            
+            
     def AgentFunction(self, percepts):
 
         # The percepts are a tuple consisting of four pieces of information
@@ -129,6 +161,12 @@ class Cleaner:
             self.previous_action = np.argmax(action_vector)
         else:
             self.previous_action = -1
+        if energy == 20:
+            self.is_charging = True
+        else:
+            self.is_charging = False
+        self.compute_direction(self.previous_action)
+        self.move(self.previous_action)
         return action_vector
     
     
@@ -173,6 +211,12 @@ def evalFitness(population):
         current_fitness = 0
         for metric in fitness_function:
             current_fitness += cleaner.game_stats[metric]
+        current_fitness += cleaner.game_stats['visits'] * 0.15
+        # current_fitness += cleaner.game_stats['cleaned'] * 0.1
+        # for coordinate in cleaner.charge_stations:            
+        #     if cleaner.map[tuple(coordinate)] > 1:
+        #         current_fitness -= cleaner.map[tuple(coordinate)]
+        current_fitness -= cleaner.map[tuple(ORIGIN[0])] * 0.2
         fitness[n] = current_fitness
 
     return fitness
@@ -232,7 +276,7 @@ def newGeneration(old_population):
         current_best_population = new_population
         
     current_round += 1
-    if avg_fitness > current_best_fitness:
+    if avg_fitness > current_best_fitness and current_round > int(NUM_ROUNDS* 0.8):
         current_best_fitness = avg_fitness
         current_best_population = new_population
     if current_round == NUM_ROUNDS:
