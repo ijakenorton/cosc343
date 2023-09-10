@@ -145,3 +145,15 @@ Map:
  [0. 0. 0. ... 0. 0. 0.]
  [0. 0. 0. ... 0. 0. 0.]
  [0. 0. 0. ... 0. 0. 0.]]
+------
+Training Schedule: [('random_agent.py', 500)]
+SUBSET_SIZE: 0.3
+MUTATION: 0.01
+Average Fitnesses: []
+Current Best Population: None
+Current Best Fitness: 1
+Elite percentage: 0.3
+NUM_ROUNDS: 500
+Current Round: 1
+Fitness Function: ['emptied']
+------

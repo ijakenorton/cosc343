@@ -1,0 +1,10 @@
+# for metric in fitness_function:
+#     current_fitness *= cleaner.game_stats[metric]
+
+# current_fitness *= cleaner.game_stats['cleaned']*0.2
+
+# for coordinate in cleaner.charge_stations:            
+#     if cleaner.map[tuple(coordinate)] > 1:
+#         current_fitness -= cleaner.map[tuple(coordinate)]
+# # current_fitness -= cleaner.map[tuple(ORIGIN[0])] 
+# fitness[n] = current_fitness

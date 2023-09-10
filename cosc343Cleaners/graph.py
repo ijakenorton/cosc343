@@ -1,37 +1,50 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 
-# Function to compute moving average
 def moving_average(data_set, periods=3):
     weights = np.ones(periods) / periods
     return np.convolve(data_set, weights, mode='valid')
 
-# Your average fitness values
- 
-numbers = "-25.36 -2.63375 1.9775000000000003 -0.8700000000000001 1.0612499999999998 -1.3212500000000005 -1.7274999999999998 1.8562499999999997 2.8137499999999998 3.21 1.32375 3.3287499999999994 -0.39750000000000013 3.0524999999999998 2.8 3.4675 1.2524999999999997 2.4 4.455 4.07625 4.84125 3.0975 2.6 2.9575 2.8225000000000002 1.6125 1.5987499999999997 -0.03500000000000014 3.5275 3.3449999999999998 3.6399999999999997 2.34 2.3625 4.595 3.9412499999999993 2.8899999999999997 3.2475 3.3287500000000003 4.0287500000000005 2.57 5.295 3.4387499999999998 3.9237499999999996 4.1125 2.60625 4.4875 4.6925 3.4537499999999994 "
-# Extracting values from the numbers string
-fitnesses = [float(number.strip()) for number in numbers.split()]
+def update(num):
+    with open("fitness.csv", "r") as file:
+        numbers = file.read()
+    fitnesses = [float(number.strip()) for number in numbers.split()]
+    
+    if len(fitnesses) == len(ax.lines[0].get_ydata()):
+        # No update in data
+        return
+    
+    smoothed_fitnesses = moving_average(fitnesses, periods=10)
+    epochs = list(range(1, len(fitnesses)+1))
+    smoothed_epochs = epochs[:len(smoothed_fitnesses)]
+    
+    # Update the data of the lines
+    ax.lines[0].set_data(epochs, fitnesses)
+    ax.lines[1].set_data(smoothed_epochs, smoothed_fitnesses)
+    
+    # Adjust the xlim to accommodate the new data points
+    ax.set_xlim(0, len(fitnesses)+1)
+    
+    # Adjust ylim based on data
+    min_fitness = min(min(fitnesses), min(smoothed_fitnesses))
+    max_fitness = max(max(fitnesses), max(smoothed_fitnesses))
+    margin = (max_fitness - min_fitness) * 0.1
+    ax.set_ylim(min_fitness - margin, max_fitness + margin)
 
-# Calculate the moving average
-smoothed_fitnesses = moving_average(fitnesses, periods=10)  # adjust the period based on desired smoothness
 
-# Create a list of epochs/timesteps based on the length of fitness values
-epochs = list(range(1, len(fitnesses)+1))
+# Set up the figure and axis
+fig, ax = plt.subplots(figsize=(12, 6))
+ax.plot([], [], label='Average Fitness', color='blue', alpha=0.3)
+ax.plot([], [], label='Trend (Moving Average)', color='red', linewidth=2)
 
-# Create an adjusted epoch list for the smoothed data
-smoothed_epochs = epochs[:len(smoothed_fitnesses)]
-
-# Plotting
-plt.figure(figsize=(12, 6))
-plt.plot(epochs, fitnesses, label='Average Fitness', color='blue', alpha=0.3)
-plt.plot(smoothed_epochs, smoothed_fitnesses, label='Trend (Moving Average)', color='red', linewidth=2)
-
-plt.title('Model Average Fitness Over Time')
-plt.xlabel('Epoch')
-plt.ylabel('Average Fitness')
-plt.legend()
-plt.grid(True)
+ax.set_title('Model Average Fitness Over Time')
+ax.set_xlabel('Epoch')
+ax.set_ylabel('Average Fitness')
+ax.legend()
+ax.grid(True)
 plt.tight_layout()
 
-# Display the plot
+ani = FuncAnimation(fig, update, interval=1000,cache_frame_data=False)  # Updates every 1000ms
 plt.show()
+
