@@ -11,7 +11,7 @@ NUM_ROUNDS = 500
 
 out_file = 'fitness.csv'
 trainingSchedule = [("random_agent.py", NUM_ROUNDS)]
-SUBSET_SIZE = 0.3
+SUBSET_SIZE = 0.2
 GRID_SIZE = game_settings['gridSize']
 ROWS, COLS = GRID_SIZE
 ORIGIN = [[int(ROWS/2), int(COLS/2)]]
@@ -19,7 +19,7 @@ MUTATION = 0.01
 avg_fitnesses = []
 current_best_population = None
 current_best_fitness = 1
-ELITE_PERCENTAGE = 0.3
+ELITE_PERCENTAGE = 0.2
 current_round = 1
 place_in_cycle = 1
 NUM_TURNS_TO_AVERAGE = 6
@@ -59,7 +59,7 @@ class Cleaner:
         self.nActions = nActions
         self.gridSize = gridSize
         self.maxTurns = maxTurns
-        self.chromosome = np.stack([np.append(np.random.uniform(-1, 1, 63), np.random.uniform(-1, 1)) for _ in range(3)])
+        self.chromosome = np.stack([np.append(np.random.uniform(-1, 1, 33), np.random.uniform(-1, 1)) for _ in range(3)])
         self.previous_action = 0
         self.direction = 0
         self.coordinates = ORIGIN[0].copy()
@@ -133,44 +133,34 @@ class Cleaner:
 
         floor_state = visual[:,:,0]   # 3x5 map where -1 indicates dirty square, 0 clean one
         energy_locations = visual[:,:,1] #3x5 map where 1 indicates the location of energy station, 0 otherwise
-        vertical_bots = visual[:,:,2] # 3x5 map of bots that can in this turn move up or down (from this bot's point of
-                                      # view), -1 if the bot is an enemy, 1 if it is friendly
-        horizontal_bots = visual[:,:,3] # 3x5 map of bots that can in this turn move up or down (from this bot's point
-                                        # of view), -1 if the bot is an enemy, 1 if it is friendly
+        vertical_bots = visual[:,:,2] # 3x5 map of bots that can in this turn move up or down (from this bot's point of view), -1 if the bot is an enemy, 1 if it is friendly
+        horizontal_bots = visual[:,:,3] # 3x5 map of bots that can in this turn move up or down (from this bot's point of view), -1 if the bot is an enemy, 1 if it is friendly
 
         #You may combine floor_state and energy_locations if you'd like: floor_state + energy_locations would give you
-        # a mape where -1 indicates dirty square, 0 a clean one, and 1 an energy station.
+        # a map where -1 indicates dirty square, 0 a clean one, and 1 an energy station.
 
         # You should implement a model here that translates from 'percepts' to 'actions'
         # through 'self.chromosome'.
         #
-        flattened_visual = visual.reshape(-1)
+        flattened_floor = floor_state.reshape(-1)
+        flattened_energy = energy_locations.reshape(-1)
+
+        # Concatenate the flattened arrays
+        flattened_visual = np.concatenate((flattened_floor, flattened_energy))
+
         status = np.array([energy, bin, fails])
         tensor = np.concatenate((flattened_visual, status))
-        # The 'actions' variable must be returned, and it must be a 4-item list or a 4-dim numpy vector
 
-        # The index of the largest value in the 'actions' vector/list is the action to be taken,
-        # with the following interpretation:
-        # largest value at index 0 - move forward;
-        # largest value at index 1 - turn right;
-        # largest value at index 2 - turn left;
-        # largest value at index 3 - move backwards;
-        #
-        # Different 'percepts' values should lead to different 'actions'.  This way the agent
-        # reacts differently to different situations.
-        #
-        # Different 'self.chromosome' should lead to different 'actions'.  This way different
-        # agents can exhibit different behaviour.
-
-        # .
-        # .
-        # .
-
-        # Right now this agent ignores percepts and chooses a random action.  Your agents should not
-        # perform random actions - your agents' actions should be deterministic from
-        # computation based on self.chromosome and percepts
+        
+        # energy_map = self.map.reshape(-1)
+        # flattened_visual = visual.reshape(-1)
+        # status = np.array([energy, bin, fails])
+        # tensor = np.concatenate((flattened_visual, energy_map))
+        # tensor = np.concatenate((tensor, status))
+        
         action_vector = self.compute_action(tensor)
         action_vector = np.append(action_vector, -1)
+        
         if fails ==0:
             self.previous_action = np.argmax(action_vector)
         else:
@@ -289,11 +279,11 @@ def newGeneration(old_population):
                 for j in range(len(subset_parents[parent1].chromosome[i])):
                     rand = random.random()
                     if rand < MUTATION:
-                        new_cleaner.chromosome[i][j] = (random.randint(0,100))
+                        new_cleaner.chromosome[i][j] = (random.randint(-1,1))
                     elif rand > 0.49:
-                        new_cleaner.chromosome[i][j] = (subset_parents[parent1].chromosome[i][j])
+                        new_cleaner.chromosome[i][j] = subset_parents[parent1].chromosome[i][j]
                     else:
-                        new_cleaner.chromosome[i][j] = (subset_parents[parent2].chromosome[i][j])
+                        new_cleaner.chromosome[i][j] = subset_parents[parent2].chromosome[i][j]
 
             new_population.append(new_cleaner)
 
