@@ -7,9 +7,9 @@ import numpy as np
 from settings import game_settings
 agentName = "<my_agent>"
 # Initialization of your variables
-NUM_ROUNDS = 500
+NUM_ROUNDS = 400
 
-out_file = 'fitness.csv'
+out_file = game_settings['file_path']
 trainingSchedule = [("random_agent.py", NUM_ROUNDS)]
 SUBSET_SIZE = 0.3
 GRID_SIZE = game_settings['gridSize']
@@ -23,11 +23,11 @@ ELITE_PERCENTAGE = 0.2
 current_round = 0
 place_in_cycle = 0
 
-NUM_TURNS_TO_AVERAGE = 5
+NUM_TURNS_TO_AVERAGE = 6
 
 STARTING_GENERATIONS = 5
-STARTING_SAMPLE = 9
-FIRST_PHASE = 100
+STARTING_SAMPLE = 19
+FIRST_PHASE = 200
 
 
 LEFT = -1
@@ -336,19 +336,17 @@ def newGeneration(old_population):
     with open(out_file, 'a') as file:
         file.write(str(avg_fitness) + " ")
 
-    # if current_round == FIRST_PHASE + 2:
-    #     place_in_cycle = 0
-    #     for i,  cleaner in enumerate(best_cleaners):
-    #         best_cleaners[i].fitness = 0
-    #     return (best_cleaners, avg_fitness)
+    if current_round == FIRST_PHASE + 2:
+        place_in_cycle = 0
+        for i, cleaner in enumerate(best_cleaners):
+            best_cleaners[i].fitness = 0
+        return (best_cleaners, avg_fitness)
 
-    # if place_in_cycle < NUM_TURNS_TO_AVERAGE and current_round > FIRST_PHASE + 1:
-        
-    #     return (old_population, avg_fitness)
-    
-    if place_in_cycle < NUM_TURNS_TO_AVERAGE:
+    if place_in_cycle < NUM_TURNS_TO_AVERAGE and current_round > FIRST_PHASE + 1:
         
         return (old_population, avg_fitness)
+    
+    
     N = len(old_population)
     gridSize, nPercepts, nActions, maxTurns = old_population[0].gridSize, old_population[0].nPercepts, old_population[0].nActions, old_population[0].maxTurns
 
@@ -360,38 +358,38 @@ def newGeneration(old_population):
     for _ in range(N - len(elites)):
         parent1, parent2 = select_parents(old_population, fitness, SUBSET_SIZE)
         child_chromosome = crossover(parent1, parent2)
-        # child_chromosome = mutate_chromosome(child_chromosome, MUTATION)
+        child_chromosome = mutate_chromosome(child_chromosome, MUTATION)
         new_cleaner = Cleaner(nPercepts, nActions, gridSize, maxTurns)
         new_cleaner.chromosome = child_chromosome
         new_population.append(new_cleaner)
 
         # ... (rest of your logic remains unchanged)
     if avg_fitness > current_best_fitness and current_round > int(NUM_ROUNDS* 0.8):
-        current_best_fitness = avg_fitness
-        current_best_population = new_population
+                current_best_fitness = avg_fitness
+                current_best_population = new_population
             # if current_round > int(NUM_ROUNDS*0.8):
             
-    # if STARTING_SAMPLE == 0 and current_round <= FIRST_PHASE+ 1:
-    #     STARTING_SAMPLE = 10
-    #     new_population = []
-    #     for i in range(0, game_settings['nCleaners']):
-    #         new_population.append(Cleaner(nPercepts, nActions, gridSize, maxTurns))
-    #     temp_elites  = top_n_indices(fitness, 4)
+    if STARTING_SAMPLE == 0 and current_round <= FIRST_PHASE+ 1:
+        STARTING_SAMPLE = 20
+        new_population = []
+        for i in range(0, game_settings['nCleaners']):
+            new_population.append(Cleaner(nPercepts, nActions, gridSize, maxTurns))
+        temp_elites  = top_n_indices(fitness, 4)
         
-    #     elite_pop = [old_population[elite] for elite in temp_elites]
+        elite_pop = [old_population[elite] for elite in temp_elites]
         
-    #     for elite in elite_pop:
-    #         best_cleaners.append(elite)    
-    #     return (new_population, avg_fitness)
+        for elite in elite_pop:
+            best_cleaners.append(elite)    
+        return (new_population, avg_fitness)
     
     #     for agent in old_population:
     #         best_cleaners = add_new_agent(best_cleaners,agent)
-    print("\nCurrent ROund: ",current_round)
-    if current_round == NUM_ROUNDS-1:
+    
+    if current_round == NUM_ROUNDS:
         
-        with open(out_file, 'a') as file:
-            file.write("\nlast round:\n " + str(sorted(old_population)) + "\n")
-            file.write("\nbest_cleaners:\n " + str(best_cleaners) + "\n")
+        # with open(out_file, 'a') as file:
+        #     file.write("\nlast round:\n " + str(sorted(old_population)) + "\n")
+        #     file.write("\nbest_cleaners:\n " + str(best_cleaners) + "\n")
             
         return (current_best_population, current_best_fitness)
             
@@ -409,12 +407,12 @@ def mutate_chromosome(chromosome, mutation_rate):
     rows, cols = chromosome.shape
     for i in range(rows):
         for j in range(cols):
-            
             if random.random() < mutation_rate:
                 rand1 = np.random.randint(rows)
                 rand2 = np.random.randint(cols)
                 chromosome[i][j] = chromosome[rand1][rand2]
     return chromosome
+
 
 def select_parents(old_population, fitness, subset_size):
     N = len(old_population)
@@ -429,13 +427,12 @@ def crossover(parent1, parent2):
     for i in range(len(parent1.chromosome)):
         for j in range(len(parent1.chromosome[i])):
             rand = random.random()
-            if rand < MUTATION:
-                child_chromosome[i][j] = ((parent1.chromosome[i][j] + parent2.chromosome[i][j])/2)
-            elif rand < 0.49:
+            if rand > 0.49:
                 child_chromosome[i][j] = parent1.chromosome[i][j]
             else:
                 child_chromosome[i][j] = parent2.chromosome[i][j]
     return child_chromosome
+
 
 def add_new_agent(top_agents, new_agent):
     """

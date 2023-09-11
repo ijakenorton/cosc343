@@ -31,30 +31,15 @@ def update(num):
     max_fitness = max(max(fitnesses), max(smoothed_fitnesses))
     margin = (max_fitness - min_fitness) * 0.1
     ax.set_ylim(min_fitness - margin, max_fitness + margin)
-
     max_fitness_value = max(fitnesses)
     max_fitness_epoch = epochs[fitnesses.index(max_fitness_value)]
-    
-
-    # Plotting
-
+    # Update the label with the maximum smoothed fitness value
     max_smoothed_value = max(smoothed_fitnesses)
+    ax.lines[0].set_label(f'Average Fitness (Max: {max_fitness_value:.2f})')
+    ax.lines[1].set_label(f'Trend (Moving Avg, Max: {max_smoothed_value:.2f})')
     
-    plt.plot(epochs, fitnesses, label='Average Fitness', color='blue', alpha=0.3)
-    plt.plot(smoothed_epochs, smoothed_fitnesses, label=f'Trend (Moving Avg, Max: {max_smoothed_value:.2f})', color='red', linewidth=2)
-
-    plt.legend()
-
-    max_smoothed_index = np.argmax(smoothed_fitnesses)
-    max_smoothed_epoch = smoothed_epochs[max_smoothed_index]
-
-    # Annotate the graph with the maximum fitness value
-    ax.annotate(f"Max: {max_fitness_value:.2f}", 
-                xy=(max_fitness_epoch, max_fitness_value), 
-                xytext=(max_fitness_epoch, max_fitness_value + margin/2), 
-                arrowprops=dict(facecolor='black', arrowstyle='->'),
-                fontsize=9)
-
+    # Update the legend
+    ax.legend(loc='upper left')
 
 # Set up the figure and axis
 fig, ax = plt.subplots(figsize=(12, 6))
@@ -68,6 +53,5 @@ ax.legend()
 ax.grid(True)
 plt.tight_layout()
 
-ani = FuncAnimation(fig, update, interval=1000,cache_frame_data=False)  # Updates every 1000ms
+ani = FuncAnimation(fig, update, interval=1000, cache_frame_data=False)  # Updates every 1000ms
 plt.show()
-
