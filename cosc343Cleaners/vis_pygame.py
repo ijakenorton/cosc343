@@ -19,7 +19,9 @@ class visualiser:
       self.GREY = 128, 128, 128
       self.YELLOW = 250, 251, 0
       self.BLUE = 0,155,255
+      self.LBLUE = 172,253,253
       self.MAGENTA = 255, 64, 255
+      self.LMAGENTA = 253, 203, 253
       self.RED = 255,38,0
       self.GREEN = 155,225,0
 
@@ -55,7 +57,7 @@ class visualiser:
       pygame.quit()
 
    def show(self, vis_data, turn=0, game=None, titleStr = None):
-       map, cleaners, stats = vis_data
+       map, cleaned_by, cleaners, stats = vis_data
 
        if titleStr is None:
            caption = ''
@@ -103,6 +105,11 @@ class visualiser:
                     c = self.GREY
                 elif map[y,x] == 1:
                     c = self.GREEN
+                elif cleaned_by[y,x] == 1:
+                    c = self.LBLUE
+                elif cleaned_by[y,x] == -1:
+                    c = self.LMAGENTA
+
                 else:
                     continue
 

@@ -1,7 +1,7 @@
 __author__ = "Lech Szymanski"
 __organization__ = "COSC343/AIML402, University of Otago"
 __email__ = "lech.szymanski@otago.ac.nz"
-__version__ = 1.1
+__version__ = 1.2
 
 import importlib
 import numpy as np
@@ -158,13 +158,13 @@ class Player:
 
         else:
             if not os.path.exists(playerFile):
-                self.game.throwError("Error! Agent file '%s' not found" % self.playerFile, self.playerid)
+                self.game.throwError("Error! Agent file '%s' not found" % self.playerFile, playerid)
                 return
 
             if len(playerFile) > 3 and playerFile[-3:].lower() == '.py':
                 playerModule = playerFile[:-3]
             else:
-                self.game.throwError("Error! Agent file %s needs a '.py' extension" % self.playerFile, self.playerid)
+                self.game.throwError("Error! Agent file %s needs a '.py' extension" % self.playerFile, playerid)
                 return
 
             # Import agent file as module
@@ -215,7 +215,7 @@ class Player:
                         return
 
                     if trainSession[1] < 0:
-                        self.game.throwError("Agent's 'trainingSchedule' should be a list of (str,int) tuples, where int corresponds to the number of train generations.",self.playerid)
+                        self.game.throwError("Agent's 'trainingSchedule' should be a list of (str,int) tuples, where int corresponds to the number of train generations.",selfp.playerid)
                         return
 
                     totTrainEpochs += trainSession[1]
@@ -482,6 +482,7 @@ class CleanersPlay:
         Y, X = self.game.gridSize
         self.map = np.zeros((Y, X, 2), dtype='int8')
         self.map[:,:,0] = -1
+        self.cleaned_by = np.zeros((Y,X),dtype='int8')
         self.rotations = [0,90,180,270]
 
         self.showGame = showGame
@@ -589,15 +590,15 @@ class CleanersPlay:
                                 self.map[yo, xo,0] = 0
                 break
 
-        # if self.showGame is not None or self.saveGame:
-        #     vis_cleaners, stats = self.vis_update(players)
-        #     vis_data = (self.map[:,:,0], vis_cleaners, stats)
+        if self.showGame is not None or self.saveGame:
+            vis_cleaners, stats = self.vis_update(players)
+            vis_data = (np.copy(self.map[:,:,0]), np.copy(self.cleaned_by), vis_cleaners, stats)
 
-        #     if self.showGame is not None:
-        #         self.game.vis.show(vis_data, turn=0, titleStr=self.showGame)
+            if self.showGame is not None:
+                self.game.vis.show(vis_data, turn=0, titleStr=self.showGame)
 
-        #     if self.saveGame:
-        #         self.vis_data = [vis_data]
+            if self.saveGame:
+                self.vis_data = [vis_data]
 
         all_avatars = []
         for player in players:
@@ -625,8 +626,12 @@ class CleanersPlay:
 
                 for avatar in player.avatars:
 
+                    avatar.action_success = 0
+
                     if avatar.energy < 1:
                         continue
+
+                    avatar.active_turns += 1
 
                     # Percepts
                     percepts = np.zeros((fieldOfVision,fieldOfVision,2)).astype('int')
@@ -765,24 +770,23 @@ class CleanersPlay:
                         avatar.bin += 1
                         avatar.cleaned += 1
                         self.map[y,x,0] = 0
+                        self.cleaned_by[y,x] = -(2*avatar.player.player-1)
                 avatar.position = (y,x)
-                if avatar.energy >= 1:
-                    avatar.active_turns += 1
 
             if not self.game.game_play:
                 return None
-            '''
+
             if self.showGame is not None or self.saveGame:
 
                 vis_cleaners, stats = self.vis_update(players)
-                vis_data = (self.map[:,:,0], vis_cleaners, stats)
+                vis_data = (np.copy(self.map[:,:,0]), np.copy(self.cleaned_by), vis_cleaners, stats)
 
                 if self.showGame is not None:
                     self.game.vis.show(vis_data, turn=turn + 1, titleStr=self.showGame)
 
                 if self.saveGame:
                     self.vis_data.append(vis_data)
-            '''
+
             if gameDone:
                 break
 
@@ -814,10 +818,10 @@ class CleanersPlay:
             saveFile = os.path.join(savePath, saveStr)
 
             self.game.game_saves.append(saveFile)
-            '''
+
             with gzip.open(saveFile, 'w') as f:
                 pickle.dump((players[0].name, name2, self.vis_data, (Y,X)), f)
-            '''
+
         scores = []
         for k, player in enumerate(players):
             scores.append(0)
@@ -871,7 +875,7 @@ class CleanersGame:
 
     # Run the game
     def run(self,player1File, player2File,visResolution=(720,480), visSpeed='normal',savePath="saved",
-            trainers=[("random_agent.py","random")],runs = list(range(1, 1001)), shows = list(range(1, 1001)),jointname=False):
+            trainers=[("random_agent.py","random")],runs = [1,2,3,4,5], shows = [1,2,3,4,5],jointname=False):
 
         self.players = list()
 
@@ -1054,8 +1058,8 @@ class CleanersGame:
                 for p in players:
                     playerStrings += [p.pname]
 
-            #self.vis = vis.visualiser(gridSize=self.players[0].game.gridSize,speed=visSpeed,playerStrings=playerStrings,
-            #                      resolution=visResolution)
+            self.vis = vis.visualiser(gridSize=self.players[0].game.gridSize,speed=visSpeed,playerStrings=playerStrings,
+                                  resolution=visResolution)
 
         if trainGames is None:
             nRuns = len(run_games)
@@ -1182,12 +1186,11 @@ class CleanersGame:
                     else:
                         traceback.print_exc()
                         sys.exit(-1)
-        '''
+
         if len(show_games) > 0:
-            #time.sleep(5)
-            #del self.vis
-            #self.vis = None
-        '''
+            time.sleep(5)
+            del self.vis
+            self.vis = None
 
     # Play visualisation of a saved game
     @staticmethod

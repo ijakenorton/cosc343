@@ -19,10 +19,17 @@ MUTATION = 0.01
 avg_fitnesses = []
 current_best_population = None
 current_best_fitness = 1
-ELITE_PERCENTAGE = 0.2
-current_round = 1
-place_in_cycle = 1
+ELITE_PERCENTAGE = 0
+current_round = 0
+place_in_cycle = 0
+
 NUM_TURNS_TO_AVERAGE = 6
+
+STARTING_GENERATIONS = 5
+STARTING_SAMPLE = 19
+FIRST_PHASE = 200
+
+
 LEFT = -1
 RIGHT = 1
 best_cleaners = []
@@ -130,9 +137,11 @@ class Cleaner:
         visual, energy, bin, fails = percepts
 
         # You can further break down the visual information
-
-        floor_state = visual[:,:,0]   # 3x5 map where -1 indicates dirty square, 0 clean one
-        energy_locations = visual[:,:,1] #3x5 map where 1 indicates the location of energy station, 0 otherwise
+        floor_energy = energy
+        if floor_energy == 0:
+            floor_energy = 1
+        floor_state = visual[:,:,0]  # 3x5 map where -1 indicates dirty square, 0 clean one
+        energy_locations = visual[:,:,1]*energy #3x5 map where 1 indicates the location of energy station, 0 otherwise
         vertical_bots = visual[:,:,2] # 3x5 map of bots that can in this turn move up or down (from this bot's point of view), -1 if the bot is an enemy, 1 if it is friendly
         horizontal_bots = visual[:,:,3] # 3x5 map of bots that can in this turn move up or down (from this bot's point of view), -1 if the bot is an enemy, 1 if it is friendly
 
@@ -148,7 +157,7 @@ class Cleaner:
         # Concatenate the flattened arrays
         flattened_visual = np.concatenate((flattened_floor, flattened_energy))
 
-        status = np.array([energy, bin, fails])
+        status = np.array([energy, bin, fails**2])
         tensor = np.concatenate((flattened_visual, status))
 
         
@@ -194,29 +203,10 @@ def evalFitness(population):
     # code is to demonstrate how to fetch information from the old_population in order
     # to score fitness of each agent
     for n, cleaner in enumerate(population):
-        # cleaner is an instance of the Cleaner class that you implemented above, therefore you can access any attributes
-        # (such as `self.chromosome').  Additionally, each object have 'game_stats' attribute provided by the
-        # game engine, which is a dictionary with the following information on the performance of the cleaner in
-        # the last game:
-        #
-        #  cleaner.game_stats['cleaned'] - int, total number of dirt loads picked up
-        #  cleaner.game_stats['emptied'] - int, total number of dirt loads emptied at a charge station
-        #  cleaner.game_stats['active_turns'] - int, total number of turns the bot was active (non-zero energy)
-        #  cleaner.game_stats['successful_actions'] - int, total number of successful actions performed during active
-        #                                                  turns
-        #  cleaner.game_stats['recharge_count'] - int, number of turns spent at a charging station
-        #  cleaner.game_stats['recharge_energy'] - int, total energy gained from the charging station
-        #  cleaner.game_stats['visits'] - int, total number of squares visited (visiting the same square twice counts
-        #                                      as one visit)
 
-        # This fitness functions considers total number of cleaned squares.  This may NOT be the best fitness function.
-        # You SHOULD consider augmenting it with information from other stats as well.  You DON'T HAVE TO make use
-        # of every stat.
         current_fitness = 1
-        # current_fitness += cleaner.game_stats['visits'] * 0.15
-        # current_fitness += cleaner.game_stats['cleaned'] * 0.1
         for metric in fitness_function:
-            current_fitness *= cleaner.game_stats[metric]
+            current_fitness *= 1 + cleaner.game_stats[metric]
         
         # current_fitness *= cleaner.game_stats['visits']
         
@@ -224,14 +214,17 @@ def evalFitness(population):
             if cleaner.map[tuple(coordinate)] > 1:
                 current_fitness -= cleaner.map[tuple(coordinate)]
         # current_fitness -= cleaner.map[tuple(ORIGIN[0])] 
-        cleaner.fitness += current_fitness
-        fitness[n] = cleaner.fitness/place_in_cycle
-
+        if current_round > FIRST_PHASE + 1:
+            cleaner.fitness += current_fitness
+            fitness[n] = cleaner.fitness/place_in_cycle
+        else:
+            cleaner.fitness = current_fitness
+            fitness[n] = current_fitness
     return fitness
 
 
-def newGeneration(old_population):
-    global current_round, current_best_fitness, current_best_population, best_cleaners, place_in_cycle
+def oldGeneration(old_population):
+    global current_round, current_best_fitness, current_best_population, best_cleaners, place_in_cycle,STARTING_SAMPLE, FIRST_PHASE
     # This function should return a tuple consisting of:
     # - a list of the new_population of cleaners that is of the same length as the old_population,
     fitness = list(evalFitness(old_population))
@@ -239,7 +232,10 @@ def newGeneration(old_population):
     with open(out_file, 'a') as file:
         file.write(str(avg_fitness) + " ")
     # - the average fitness of the old population
-    if place_in_cycle < NUM_TURNS_TO_AVERAGE:
+    if(current_round == FIRST_PHASE+ 1):
+        current_round += 1
+        return  (best_cleaners, avg_fitness)
+    if place_in_cycle < NUM_TURNS_TO_AVERAGE and current_round > FIRST_PHASE:
         place_in_cycle += 1
         return  (old_population, avg_fitness)
     else:
@@ -259,7 +255,7 @@ def newGeneration(old_population):
         elites  = top_n_indices(fitness, num_elites)
         
         place_in_cycle = 1
-    
+
     # Create new population list...
         new_population = list()
         for elite in elites:
@@ -279,7 +275,10 @@ def newGeneration(old_population):
                 for j in range(len(subset_parents[parent1].chromosome[i])):
                     rand = random.random()
                     if rand < MUTATION:
-                        new_cleaner.chromosome[i][j] = (random.randint(-1,1))
+                        rows, cols = new_cleaner.chromosome.shape
+                        rand1 = np.random.randint(rows)
+                        rand2 = np.random.randint(cols)
+                        new_cleaner.chromosome[i][j] = new_cleaner.chromosome[rand1][rand2]
                     elif rand > 0.49:
                         new_cleaner.chromosome[i][j] = subset_parents[parent1].chromosome[i][j]
                     else:
@@ -294,25 +293,144 @@ def newGeneration(old_population):
             current_best_population = new_population
 
         current_round += 1
-        # if avg_fitness > current_best_fitness and current_round > int(NUM_ROUNDS* 0.8):
-        #     current_best_fitness = avg_fitness
-        #     current_best_population = new_population
+        if avg_fitness > current_best_fitness and current_round > int(NUM_ROUNDS* 0.8):
+            current_best_fitness = avg_fitness
+            current_best_population = new_population
         # if current_round > int(NUM_ROUNDS*0.8):
-            
+        
+        if STARTING_SAMPLE == 0 and current_round < FIRST_PHASE:
+            STARTING_SAMPLE = 20
+            new_population = []
+            for i in range(0, game_settings['nCleaners']):
+                new_population.append(Cleaner(nPercepts, nActions, gridSize, maxTurns))
+            temp_elites  = top_n_indices(fitness, 4)
+            for elite in temp_elites:
+                best_cleaners.append(elite)    
+            return (new_population, avg_fitness)
+        
         #     for agent in old_population:
         #         best_cleaners = add_new_agent(best_cleaners,agent)
-        # if current_round == NUM_ROUNDS:
+        
+        if current_round == NUM_ROUNDS:
             
-        #     with open(out_file, 'a') as file:
-        #         file.write("\nlast round:\n " + str(sorted(old_population)) + "\n")
-        #         file.write("\nbest_cleaners:\n " + str(best_cleaners) + "\n")
+            with open(out_file, 'a') as file:
+                file.write("\nlast round:\n " + str(sorted(old_population)) + "\n")
+                file.write("\nbest_cleaners:\n " + str(best_cleaners) + "\n")
                 
-        #     return (best_cleaners, current_best_fitness)
+            return (current_best_population, current_best_fitness)
         
 
 
         
         return (new_population, avg_fitness)
+
+def newGeneration(old_population):
+    global current_round, current_best_fitness, current_best_population, best_cleaners, place_in_cycle, STARTING_SAMPLE, FIRST_PHASE
+    if place_in_cycle == NUM_TURNS_TO_AVERAGE:
+        place_in_cycle = 0
+    current_round += 1
+    STARTING_SAMPLE -= 1
+    place_in_cycle += 1
+    fitness = list(evalFitness(old_population))
+    avg_fitness = np.mean(fitness)
+    with open(out_file, 'a') as file:
+        file.write(str(avg_fitness) + " ")
+
+    if current_round == FIRST_PHASE + 2:
+        place_in_cycle = 0
+        for i in enumerate(best_cleaners):
+            best_cleaners[i].fitness = 0
+        return (best_cleaners, avg_fitness)
+
+    if place_in_cycle < NUM_TURNS_TO_AVERAGE and current_round > FIRST_PHASE + 1:
+        
+        return (old_population, avg_fitness)
+    
+    
+    N = len(old_population)
+    gridSize, nPercepts, nActions, maxTurns = old_population[0].gridSize, old_population[0].nPercepts, old_population[0].nActions, old_population[0].maxTurns
+
+    elites = get_elites(fitness, ELITE_PERCENTAGE, int(ELITE_PERCENTAGE * N))
+    for elite in elites:
+        old_population[elite].fitness = 0
+    new_population = [old_population[elite] for elite in elites]
+
+    for _ in range(N - len(elites)):
+        parent1, parent2 = select_parents(old_population, fitness, SUBSET_SIZE)
+        child_chromosome = crossover(parent1, parent2)
+        child_chromosome = mutate_chromosome(child_chromosome, MUTATION)
+        new_cleaner = Cleaner(nPercepts, nActions, gridSize, maxTurns)
+        new_cleaner.chromosome = child_chromosome
+        new_population.append(new_cleaner)
+
+        # ... (rest of your logic remains unchanged)
+    if avg_fitness > current_best_fitness and current_round > int(NUM_ROUNDS* 0.8):
+                current_best_fitness = avg_fitness
+                current_best_population = new_population
+            # if current_round > int(NUM_ROUNDS*0.8):
+            
+    if STARTING_SAMPLE == 0 and current_round <= FIRST_PHASE+ 1:
+        STARTING_SAMPLE = 20
+        new_population = []
+        for i in range(0, game_settings['nCleaners']):
+            new_population.append(Cleaner(nPercepts, nActions, gridSize, maxTurns))
+        temp_elites  = top_n_indices(fitness, 4)
+        
+        elite_pop = [old_population[elite] for elite in temp_elites]
+        
+        for elite in elite_pop:
+            best_cleaners.append(elite)    
+        return (new_population, avg_fitness)
+    
+    #     for agent in old_population:
+    #         best_cleaners = add_new_agent(best_cleaners,agent)
+    
+    if current_round == NUM_ROUNDS:
+        
+        with open(out_file, 'a') as file:
+            file.write("\nlast round:\n " + str(sorted(old_population)) + "\n")
+            file.write("\nbest_cleaners:\n " + str(best_cleaners) + "\n")
+            
+        return (current_best_population, current_best_fitness)
+            
+
+
+            
+    return (new_population, avg_fitness)
+    
+
+
+def get_elites(fitness, percentage, num_elites):
+    return top_n_indices(fitness, num_elites)
+
+def mutate_chromosome(chromosome, mutation_rate):
+    rows, cols = chromosome.shape
+    for i in range(rows):
+        for j in range(cols):
+            if random.random() < mutation_rate:
+                rand1 = np.random.randint(rows)
+                rand2 = np.random.randint(cols)
+                chromosome[i][j] = chromosome[rand1][rand2]
+    return chromosome
+
+def select_parents(old_population, fitness, subset_size):
+    N = len(old_population)
+    indices = random.sample(range(N), int(N * subset_size))
+    subset_scores = [fitness[j] for j in indices]
+    subset_parents = [old_population[x] for x in indices]
+    parent1, parent2 = top_n_indices(subset_scores, 2)
+    return subset_parents[parent1], subset_parents[parent2]
+
+def crossover(parent1, parent2):
+    child_chromosome = np.zeros_like(parent1.chromosome)
+    for i in range(len(parent1.chromosome)):
+        for j in range(len(parent1.chromosome[i])):
+            rand = random.random()
+            if rand > 0.49:
+                child_chromosome[i][j] = parent1.chromosome[i][j]
+            else:
+                child_chromosome[i][j] = parent2.chromosome[i][j]
+    return child_chromosome
 
 def add_new_agent(top_agents, new_agent):
     """
