@@ -7,7 +7,7 @@ import numpy as np
 from settings import game_settings
 agentName = "<my_agent>"
 # Initialization of your variables
-NUM_ROUNDS = 400
+NUM_ROUNDS = 500
 
 out_file = game_settings['file_path']
 trainingSchedule = [("random_agent.py", NUM_ROUNDS)]
@@ -19,15 +19,15 @@ MUTATION = 0.01
 avg_fitnesses = []
 current_best_population = None
 current_best_fitness = 1
-ELITE_PERCENTAGE = 0.2
+ELITE_PERCENTAGE = 0.3
 current_round = 0
 place_in_cycle = 0
 
 NUM_TURNS_TO_AVERAGE = 6
 
 STARTING_GENERATIONS = 5
-STARTING_SAMPLE = 19
-FIRST_PHASE = 200
+STARTING_SAMPLE = 9
+FIRST_PHASE = 100
 
 
 LEFT = -1
@@ -66,7 +66,7 @@ class Cleaner:
         self.nActions = nActions
         self.gridSize = gridSize
         self.maxTurns = maxTurns
-        self.chromosome = np.stack([np.append(np.random.uniform(-1, 1, 33), np.random.uniform(-1, 1)) for _ in range(3)])
+        self.chromosome = np.stack([np.append(np.random.uniform(0, 1, 33), np.random.uniform(0, 1)) for _ in range(3)])
         self.previous_action = 0
         self.direction = 0
         self.coordinates = ORIGIN[0].copy()
@@ -137,9 +137,9 @@ class Cleaner:
         visual, energy, bin, fails = percepts
 
         # You can further break down the visual information
-        floor_energy = energy
-        if floor_energy == 0:
-            floor_energy = 1
+        # floor_energy = energy
+        # if floor_energy == 0:
+        #     floor_energy = 1
         floor_state = visual[:,:,0]  # 3x5 map where -1 indicates dirty square, 0 clean one
         energy_locations = visual[:,:,1]*energy #3x5 map where 1 indicates the location of energy station, 0 otherwise
         vertical_bots = visual[:,:,2] # 3x5 map of bots that can in this turn move up or down (from this bot's point of view), -1 if the bot is an enemy, 1 if it is friendly
@@ -157,7 +157,7 @@ class Cleaner:
         # Concatenate the flattened arrays
         flattened_visual = np.concatenate((flattened_floor, flattened_energy))
 
-        status = np.array([energy, bin, fails**2])
+        status = np.array([energy, bin*energy, fails**2])
         tensor = np.concatenate((flattened_visual, status))
 
         
@@ -168,7 +168,7 @@ class Cleaner:
         # tensor = np.concatenate((tensor, status))
         
         action_vector = self.compute_action(tensor)
-        action_vector = np.append(action_vector, -1)
+        action_vector = np.append(action_vector, 0)
         
         if fails ==0:
             self.previous_action = np.argmax(action_vector)
@@ -370,7 +370,7 @@ def newGeneration(old_population):
             # if current_round > int(NUM_ROUNDS*0.8):
             
     if STARTING_SAMPLE == 0 and current_round <= FIRST_PHASE+ 1:
-        STARTING_SAMPLE = 20
+        STARTING_SAMPLE = 10
         new_population = []
         for i in range(0, game_settings['nCleaners']):
             new_population.append(Cleaner(nPercepts, nActions, gridSize, maxTurns))

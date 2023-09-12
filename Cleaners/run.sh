@@ -24,6 +24,6 @@ for i in 0 1 2 3 4; do
     cd ..
 done
 
-sleep 5
+sleep 10
 cd graphing
 python graph2.py
